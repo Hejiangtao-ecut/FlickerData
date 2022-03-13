@@ -5,6 +5,14 @@ cloud.init({
 });
 
 exports.main = async (event, context) => {
-    return cloud.database().collection("pageInfo")
+    const pageList = ['index'];
+    if (!pageList.includes(event.pageName)) {
+        return {
+            errMsg: 'pageName not found'
+        }
+    }
+    return cloud.database().collection("pageInfo").where({
+        pageName: event.pageName
+    })
     .get()
 }
