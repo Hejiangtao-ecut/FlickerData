@@ -1,0 +1,12 @@
+<button type="default" bindtap="buttonTap">Button</button>
+
+<input placeholder="name" bindinput="getName"/>
+<input placeholder="age" bindinput="getAge"/>
+<button type="default" bindtap="addData">添加数据</button>
+
+<button type="default" bindtap="getData">查询数据</button>
+
+<input placeholder="要删除的名字" bindinput="getDelName"/>
+<button type="default" bindtap="delData">删除数据</button>
+
+<button type="default" bindtap="upDate">更新数据</button>

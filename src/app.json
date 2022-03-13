@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/demo/index",
+    "pages/index/index",
+    "pages/classify/index",
+    "pages/forum/index",
+    "pages/personal/index"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "闪视数据",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#515151",
+    "selectedColor": "#d81e06",
+    "position": "bottom",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "common/imgs/home.png",
+        "selectedIconPath": "common/imgs/home-select.png"
+      },
+      {
+        "pagePath": "pages/classify/index",
+        "text": "分类",
+        "iconPath": "common/imgs/classify.png",
+        "selectedIconPath": "common/imgs/classify-select.png"
+      },
+      {
+        "pagePath": "pages/forum/index",
+        "text": "分类",
+        "iconPath": "common/imgs/forum.png",
+        "selectedIconPath": "common/imgs/forum-select.png"
+      },
+      {
+        "pagePath": "pages/personal/index",
+        "text": "我的",
+        "iconPath": "common/imgs/me.png",
+        "selectedIconPath": "common/imgs/me-select.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}

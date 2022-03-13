@@ -1,0 +1,27 @@
+{
+  "name": "flickerdata",
+  "version": "1.0.0",
+  "description": "一款免费便捷数据可视化微信小程序",
+  "main": "index.js",
+  "scripts": {
+    "build": "gulp build",
+    "add": "plop",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chalk": "^4.1.1",
+    "gulp": "^4.0.2",
+    "gulp-cached": "^1.1.1",
+    "gulp-less": "^5.0.0",
+    "gulp-load-plugins": "^2.0.5",
+    "gulp-rename": "^2.0.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "plop": "^2.7.6"
+  },
+  "dependencies": {
+    "miniprogram-api-typings": "^3.4.5"
+  }
+}
