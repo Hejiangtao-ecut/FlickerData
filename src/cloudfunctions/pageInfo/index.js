@@ -4,7 +4,9 @@
 
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
-cloud.init()
+cloud.init({
+    env: 'flickerdata-4ghcwynx39ecd176'
+})
 
 // 引入各个文件
 const basicInfo = require('./basicInfo/index');

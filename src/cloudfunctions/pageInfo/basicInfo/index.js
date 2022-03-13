@@ -1,12 +1,10 @@
 const cloud = require('wx-server-sdk');
 
 cloud.init({
-    env: cloud.DYNAMIC_CURRENT_ENV
+    env: 'flickerdata-4ghcwynx39ecd176'
 });
 
 exports.main = async (event, context) => {
-    return cloud.database().collection('pageInfo').where({
-        pageName: event.pageName
-    })
+    return cloud.database().collection("pageInfo")
     .get()
 }

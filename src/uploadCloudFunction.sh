@@ -1,1 +1,1 @@
-"/Applications/wechatwebdevtools.app/Contents/MacOS/cli" cloud functions deploy --e hjtwxapp-4g2fkowbb9335eab --n quickstartFunctions --r --project "/Users/hejiangtao02/Desktop/毕设项目/GraduationProject/FlickerData" --report_first --report
+"/Applications/wechatwebdevtools.app/Contents/MacOS/cli" cloud functions deploy --e flickerdata-4ghcwynx39ecd176 --n quickstartFunctions --r --project "/Users/hejiangtao02/Desktop/毕设项目/GraduationProject/FlickerData" --report_first --report
