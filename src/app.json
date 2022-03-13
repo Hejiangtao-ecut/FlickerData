@@ -1,9 +1,7 @@
 {
   "pages": [
-    "pages/demo/index",
     "pages/index/index",
     "pages/classify/index",
-    "pages/forum/index",
     "pages/personal/index"
   ],
   "window": {
@@ -30,12 +28,6 @@
         "text": "分类",
         "iconPath": "common/imgs/classify.png",
         "selectedIconPath": "common/imgs/classify-select.png"
-      },
-      {
-        "pagePath": "pages/forum/index",
-        "text": "分类",
-        "iconPath": "common/imgs/forum.png",
-        "selectedIconPath": "common/imgs/forum-select.png"
       },
       {
         "pagePath": "pages/personal/index",
