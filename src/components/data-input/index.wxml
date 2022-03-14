@@ -1,1 +1,15 @@
-<view>data-input page</view>
+<view
+    class="container {{hasClick ? 'hasSelect' : ''}}"
+    bindtap="hasClick"
+    bindtouchstart="touchstart"
+    bindtouchend="touchend">
+    <image class="imgIcon" src="{{itemData.imgSrc}}"/>
+    <view class="textArea">
+        <view class="title">
+            {{itemData.name}}
+        </view>
+        <view class="tips">
+            {{itemData.doc}}
+        </view>
+    </view>
+</view>

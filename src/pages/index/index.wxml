@@ -1,3 +1,6 @@
 <view class="container">
-    
+    <data-input
+        wx:for="{{inputModel}}"
+        wx:key="index"
+        itemData="{{item}}"/>
 </view>

@@ -1,3 +1,5 @@
 {
-    "usingComponents": {}
+    "usingComponents": {
+        "data-input": "../../components/data-input"
+    }
 }
