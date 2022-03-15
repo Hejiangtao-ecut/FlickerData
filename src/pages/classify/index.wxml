@@ -1,1 +1,11 @@
-<view>classify page</view>
+<scroll-view class="container" scroll-into-view="box{{selected}}" enable-flex scroll-x="true">
+    <view
+        wx:for="{{list}}"
+        wx:key="index"
+        id="box{{index + 1}}"
+        class="box {{index === selected ? 'selectBox' : ''}}"
+        data-index="{{index}}"
+        bindtap="clicked">
+        box{{index}}=====
+    </view>
+</scroll-view>

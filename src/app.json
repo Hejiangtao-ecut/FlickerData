@@ -1,19 +1,19 @@
 {
   "pages": [
-    "pages/classify/index",
     "pages/index/index",
+    "pages/classify/index",
     "pages/personal/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#c7254e",
+    "navigationBarBackgroundColor": "#a9334c",
     "navigationBarTitleText": "闪视数据",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {
     "color": "#707070",
-    "selectedColor": "#c7254e",
+    "selectedColor": "#a9334c",
     "position": "bottom",
     "borderStyle": "black",
     "list": [
