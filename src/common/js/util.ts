@@ -15,9 +15,12 @@ export async function getPageInfo(pageName, retry = true) {
             pageName
         }
     })
-    .then(res => {
-        return res.result;
-    }, rej => {
-        return retry ? getPageInfo(pageName, false) : rej;
-    })
+        .then(res=> res.result.errMsg ? reject('err') : res.result)
+        .then(res => {
+            console.log(res);
+            return res;
+        }, rej => {
+            console.log(rej)
+            return retry ? getPageInfo(pageName, false) : rej;
+        })
 }
