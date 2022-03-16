@@ -32,10 +32,23 @@ Page({
         })
     },
 
-    clicked(e) {
-        console.log(e);
+    /**
+     * 更改 selected 同步头部导航下面 item
+     */
+    changeSelect(e) {
         this.setData({
             selected: e.target.dataset.index
         })
+    },
+
+    /**
+     * 获取当前的 swiper item
+     */
+    getCurrent(event) {
+        if (event.detail.source) {
+            this.setData({
+                selected: event.detail.current
+            })
+        }
     }
 })

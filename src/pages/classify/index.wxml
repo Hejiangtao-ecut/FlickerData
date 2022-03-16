@@ -1,22 +1,28 @@
-<scroll-view class="container" scroll-into-view="box{{selected}}" enable-flex scroll-x="true">
+<scroll-view
+    class="container"
+    scroll-into-view="box{{selected}}"
+    enable-flex
+    scroll-x="true">
     <view
         wx:for="{{list}}"
         wx:key="index"
         id="box{{index + 1}}"
         class="box {{index === selected ? 'selectBox' : ''}}"
         data-index="{{index}}"
-        bindtap="clicked">
+        bindtap="changeSelect">
         {{item}}
     </view>
 </scroll-view>
 
 <swiper
     class="swiperContainer"
-    current="{{selected}}">
+    current="{{selected}}"
+    bindchange="getCurrent">
     <swiper-item
         wx:for="{{list}}"
         wx:key="index"
-        class="swiperItem">
+        class="swiperItem"
+        skip-hidden-item-layout>
         {{item}}
     </swiper-item>
 </swiper>

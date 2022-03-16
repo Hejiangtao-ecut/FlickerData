@@ -30,8 +30,6 @@ async function getPageInfo(pageName, retry = true) {
  */
 export async function checkPageInfoData(pageName, retry = true) {
     const data = await getPageInfo(pageName, retry);
-    console.log('0----------')
-    console.log(data);
     data.checkCode = data.errMsg.includes('collection.get:ok');
     console.log(data.checkCode);
     return data;

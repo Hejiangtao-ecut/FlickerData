@@ -58,7 +58,7 @@ const checkPath = () => path => {
 function add(path, desc, type) {
     const actions = [];
     const pageMap = new Map([
-        ['ts', 'ts.hbs'],
+        ['js', 'js.hbs'],
         ['less', 'less.hbs'],
         ['json', 'json.hbs'],
         ['wxml', 'wxml.hbs']
