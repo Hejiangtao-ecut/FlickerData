@@ -3,7 +3,9 @@
  * @desc 分类页面
  */
 
-import { getPageInfo } from '../../common/js/util';
+import { checkPageInfoData } from '../../common/js/util';
+import {showRequestErrToast} from '../../common/js/showToast';
+
 
 
 Page({
@@ -12,7 +14,7 @@ Page({
     * 页面的初始数据
     */
     data: {
-        list: new Array(10).fill(1),
+        list: [],
         selected: 0
     },
 
@@ -20,10 +22,15 @@ Page({
     * 生命周期函数--监听页面加载
     */
     onLoad: async function (options) {
-        const data = await getPageInfo('classifyi');
-        console.log(data);
-        // const { pageInfo } = data;
-        // console.log(pageInfo);
+        const data = await checkPageInfoData('classify');
+        if (!data.checkCode) {
+            showRequestErrToast();
+            return;
+        }
+        console.log(data.data[0].pageInfo.headList);
+        this.setData({
+            list: data.data[0].pageInfo.headList
+        })
     },
 
     clicked(e) {

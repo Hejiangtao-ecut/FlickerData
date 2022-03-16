@@ -6,6 +6,17 @@
         class="box {{index === selected ? 'selectBox' : ''}}"
         data-index="{{index}}"
         bindtap="clicked">
-        box{{index}}=====
+        {{item}}
     </view>
 </scroll-view>
+
+<swiper
+    class="swiperContainer"
+    current="{{selected}}">
+    <swiper-item
+        wx:for="{{list}}"
+        wx:key="index"
+        class="swiperItem">
+        {{item}}
+    </swiper-item>
+</swiper>

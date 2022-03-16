@@ -8,19 +8,31 @@
  * @param {boolean} retry 是否重试，第一次失败默认会重试一次
  * @return object
  */
-export async function getPageInfo(pageName, retry = true) {
-    return await wx.cloud.callFunction({
-        name: 'pageInfo',
-        data: {
-            pageName
-        }
-    })
-        .then(res=> res.result.errMsg ? reject('err') : res.result)
+async function getPageInfo(pageName, retry = true) {
+    return await wx.cloud
+        .callFunction({
+            name: 'pageInfo',
+            data: {
+                pageName
+            }
+        })
         .then(res => {
-            console.log(res);
-            return res;
+            return res.result;
         }, rej => {
-            console.log(rej)
             return retry ? getPageInfo(pageName, false) : rej;
         })
+}
+
+/**
+ * @param {string} pageName 页面名称
+ * @param {boolean} retry 是否重试，第一次失败默认会重试一次
+ * @doc 校验请求数据是否正确
+ */
+export async function checkPageInfoData(pageName, retry = true) {
+    const data = await getPageInfo(pageName, retry);
+    console.log('0----------')
+    console.log(data);
+    data.checkCode = data.errMsg.includes('collection.get:ok');
+    console.log(data.checkCode);
+    return data;
 }

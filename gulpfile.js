@@ -19,6 +19,7 @@ const less = [`${root}**/*.less`];
 const copyFile = [
     `${root}**/*.json`,
     `${root}**/*.wxml`,
+    `${root}**/*.wxss`,
     `${root}**/*.js`,
     `${root}**/*.png`,
     `${root}**/*.svg`,
