@@ -6,7 +6,7 @@
 /**
  * @param {string} pageName 页面名称
  * @param {boolean} retry 是否重试，第一次失败默认会重试一次
- * @returns object
+ * @return object
  */
 export async function getPageInfo(pageName, retry = true) {
     return await wx.cloud.callFunction({
