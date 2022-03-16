@@ -27,9 +27,8 @@ Page({
             showRequestErrToast();
             return;
         }
-        console.log(data.data[0].pageInfo.headList);
         this.setData({
-            list: data.data[0].pageInfo.headList
+            list: data.data[0].headList || []
         })
     },
 

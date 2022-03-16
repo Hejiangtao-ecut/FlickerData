@@ -25,7 +25,7 @@ Page({
             return;
         }
         this.setData({
-            inputModel: data.data[0]?.pageInfo?.inputModel ?? []
+            inputModel: data.data[0]?.inputModel ?? []
         })
     }
 })
