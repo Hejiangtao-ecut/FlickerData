@@ -5,7 +5,6 @@
 
 import { checkPageInfoData } from '../../common/js/util';
 import { showRequestErrToast } from '../../common/js/showToast';
-import { BASICINFO } from '../../common/js/type';
 
 Page({
 
@@ -20,7 +19,7 @@ Page({
     * 生命周期函数--监听页面加载
     */
     onLoad: async function (options) {
-        const data = await checkPageInfoData('index', BASICINFO);
+        const data = await checkPageInfoData('index');
         if (!data.checkCode) {
             showRequestErrToast();
             return;

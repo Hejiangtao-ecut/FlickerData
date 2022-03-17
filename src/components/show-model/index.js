@@ -14,9 +14,9 @@ Component({
             type: Boolean,
             value: false,
             observer: function (isShow) {
-                console.log('----');
-                console.log(isShow);
-                console.log(this.data.isShow);
+                if (this.data.isGetData) {
+                    return;
+                }
             }
         }
     },
@@ -25,7 +25,8 @@ Component({
     * 组件的初始数据
     */
     data: {
-
+        isGetData: false,
+        tplList: []
     },
 
     /**
