@@ -1,18 +1,21 @@
-<view wx:for="{{tplList}}" wx:key="index">
-    <image src="{{item.imgSrc}}" />
-    <view>
-        {{item.name}}
+<view class="tplContainer">
+    <view
+        class="tplItem"
+        wx:for="{{tplList}}"
+        wx:key="index">
+        <view class="tplImg">
+            <image src="{{item.imgSrc}}" />
+        </view>
+        <view class="tplName">
+            {{item.name}}
+        </view>
     </view>
 </view>
 
-<view wx:for="{{tplList}}" wx:key="index">
-    <image src="{{item.imgSrc}}" />
-    <view>
-        {{item.name}}
-    </view>
-</view>
-
-<view>
+<view class="listNum">
     共获取到{{tplList.length}}条信息
+</view>
+<view class="declaration">
+    闪视数据，让数据看得见！
 </view>
 

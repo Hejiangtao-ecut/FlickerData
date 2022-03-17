@@ -6,6 +6,11 @@ page{
   justify-content: flex-start;
 }
 
+image{
+  width: 100%;
+  height: 100%;
+}
+
 button {
   background: initial;
 }
