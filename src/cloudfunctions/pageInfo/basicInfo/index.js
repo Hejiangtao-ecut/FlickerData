@@ -1,3 +1,6 @@
+/**
+ * 获取页面结构信息
+ */
 const cloud = require('wx-server-sdk');
 
 cloud.init({

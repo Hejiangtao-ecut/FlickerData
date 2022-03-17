@@ -4,7 +4,8 @@
  */
 
 import { checkPageInfoData } from '../../common/js/util';
-import {showRequestErrToast} from '../../common/js/showToast';
+import { showRequestErrToast } from '../../common/js/showToast';
+import { BASICINFO } from '../../common/js/type';
 
 
 
@@ -14,7 +15,13 @@ Page({
     * 页面的初始数据
     */
     data: {
+        /**
+         * 头部列表
+         */
         list: [],
+        /**
+         * 选中元素
+         */
         selected: 0
     },
 
@@ -22,14 +29,14 @@ Page({
     * 生命周期函数--监听页面加载
     */
     onLoad: async function (options) {
-        const data = await checkPageInfoData('classify');
+        const data = await checkPageInfoData('classify', BASICINFO);
         if (!data.checkCode) {
             showRequestErrToast();
             return;
         }
         this.setData({
             list: data.data[0].headList || []
-        })
+        });
     },
 
     /**

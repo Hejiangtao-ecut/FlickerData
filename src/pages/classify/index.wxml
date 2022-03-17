@@ -23,6 +23,9 @@
         wx:key="index"
         class="swiperItem"
         skip-hidden-item-layout>
-        {{item}}
+        <show-model
+            index="{{index}}"
+            itemData="{{item}}"
+            isShow="{{index === selected}}"/>
     </swiper-item>
 </swiper>
