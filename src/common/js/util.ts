@@ -36,16 +36,29 @@ async function getPageInfo(pageName, retry = true) {
 export async function checkPageInfoData(pageName, retry = true) {
     const data = await getPageInfo(pageName, retry);
     data.checkCode = data.errMsg.includes('collection.get:ok');
-    console.log(data.checkCode);
     return data;
 }
 
 /**
- * @doc 获取模板列表数据
+ * @param {Number} tplNum 模板序号
+ * @doc 获取模板列表信息
  */
-export async function getTplInfo(tplNum, type) {
+export async function getTplInfo(tplNum) {
     return await wx.cloud.callFunction({
-        name: ''
+        name: TYPE.PAGEINFO,
+        data: {
+            tplNum,
+            type: TYPE.TPLINFO
+        }
     })
+    .then(res => res.result, rej => rej)
 }
 
+
+export async function checkTplInfo(tplNum) {
+    console.log('----');
+    console.log(tplNum);
+    const data = await getTplInfo(tplNum);
+    data.checkCode = data.errMsg.includes('collection.get:ok');
+    return data;
+}

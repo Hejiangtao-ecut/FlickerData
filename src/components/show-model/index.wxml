@@ -1,24 +1,18 @@
-<view>showModel page</view>
-<view>showModel page</view>
+<view wx:for="{{tplList}}" wx:key="index">
+    <image src="{{item.imgSrc}}" />
+    <view>
+        {{item.name}}
+    </view>
+</view>
 
-<view>showModel page</view>
-<view>showModel page</view>
-
-
-<view>showModel page</view>
-<view>showModel page</view>
-
-<view>showModel page</view>
-
-
-<view>showModel page</view>
-<view>showModel page</view>
-
-<view>
-    {{index}}
+<view wx:for="{{tplList}}" wx:key="index">
+    <image src="{{item.imgSrc}}" />
+    <view>
+        {{item.name}}
+    </view>
 </view>
 
 <view>
-    {{itemData.name}}
+    共获取到{{tplList.length}}条信息
 </view>
 

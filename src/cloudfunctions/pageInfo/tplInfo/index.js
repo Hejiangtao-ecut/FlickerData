@@ -16,7 +16,7 @@ exports.main = async (event, context) => {
     }
     return cloud.database().collection('tplInfo')
         .where({
-            pageNum: event.pageNum
+            tplNum: event.tplNum
         })
         .get()
 }
