@@ -4,6 +4,8 @@
  */
 
 import { showToast, showLoading } from './util';
+const echarts = require('../../components/ec-canvas/echarts');
+
 
 /**
  * @doc 将 canvas 实例保存为图片至本地
@@ -41,3 +43,17 @@ export function saveImageToPhotos(ecComponent) {
     });
 }
 
+export function initChart(canvas, width, height, dpr) {
+    let chart = null;
+    chart = echarts.init(canvas, null, {
+        width: width,
+        height: height,
+        devicePixelRatio: dpr
+    });
+    canvas.setChart(chart);
+
+    const option = { "series": [{ "data": [820, 932, 901, 934, 1290, 1330, 1320], "type": "line" }], "xAxis": { "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "type": "category" }, "yAxis": { "type": "value" } }
+
+    chart.setOption(option);
+    return chart;
+}
