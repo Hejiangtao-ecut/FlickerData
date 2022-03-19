@@ -1,1 +1,6 @@
-<view>tplInfo page</view>
+<view class="container">
+    <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}" />
+</view>
+<view bindtap="save">
+    保存图片
+</view>
