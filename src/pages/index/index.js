@@ -4,7 +4,7 @@
  */
 
 import { checkPageInfoData } from '../../common/js/util';
-import { showRequestErrToast } from '../../common/js/showToast';
+import { showToast } from '../../common/js/util';
 
 Page({
 
@@ -21,7 +21,7 @@ Page({
     onLoad: async function (options) {
         const data = await checkPageInfoData('index');
         if (!data.checkCode) {
-            showRequestErrToast();
+            showToast('网络错误', 'error');
             return;
         }
         this.setData({

@@ -54,11 +54,41 @@ export async function getTplInfo(tplNum) {
     .then(res => res.result, rej => rej)
 }
 
-
+/**
+ * @doc 校验模板信息是否正确
+ * @param tplNum 模板编号
+ */
 export async function checkTplInfo(tplNum) {
-    console.log('----');
-    console.log(tplNum);
     const data = await getTplInfo(tplNum);
     data.checkCode = data.errMsg.includes('collection.get:ok');
     return data;
+}
+
+type Icon = "error" | "success" | "loading" | "none";
+/**
+ * showToast
+ * @param title 标题
+ * @param {Icon}icon 图标
+ * @param duration toast 持续时间
+ * @param mask 是否展示蒙层
+ */
+export function showToast(title:string, icon:Icon, duration:number = 2000, mask:boolean = false) {
+    wx.showToast({
+        title,
+        icon,
+        duration,
+        mask
+    });
+}
+
+/**
+ * @doc 展示 loading
+ * @param title 标题
+ * @param mask 蒙层，防止事件透传
+ */
+export function showLoading(title:string, mask:boolean = true) {
+    wx.showLoading({
+        title,
+        mask
+    });
 }
