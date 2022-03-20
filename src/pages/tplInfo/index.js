@@ -10,22 +10,28 @@ Page({
         ec: {
             onInit: initChart
         },
-        clicked: false
+        hasChart:false,
+        clicked: false,
     },
 
-    demo(e) {
+    /**
+     * @doc 获取 chart 实例
+     * @param {*} e.detail chart 实例
+     */
+    getChart(e) {
         // 获取 chart，进行数据操纵
-        console.log('demo----');
-        console.log(e);
+        if (e.detail) {
+            this.chart = e.detail;
+            this.setData({
+                hasChart: true
+            })
+        }
     },
 
     /**
      * 保存图片至本地
      */
     save() {
-        // saveImageToPhotos(this.selectComponent('#mychart-dom-bar'));
-
-        const x = wx.createSelectorQuery().in(this);
-        console.log(x.selectAll('.container'));
+        saveImageToPhotos(this.selectComponent('#mychart-dom-bar'));
     }
 });

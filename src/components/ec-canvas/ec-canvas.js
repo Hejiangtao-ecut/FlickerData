@@ -121,9 +121,11 @@ Component({
       query.select('.ec-canvas').boundingClientRect(res => {
         if (typeof callback === 'function') {
           this.chart = callback(canvas, res.width, res.height, canvasDpr);
+          this.triggerEvent('exposeChart', this.chart);
         }
         else if (this.data.ec && typeof this.data.ec.onInit === 'function') {
           this.chart = this.data.ec.onInit(canvas, res.width, res.height, canvasDpr);
+          this.triggerEvent('exposeChart', this.chart);
         }
         else {
           this.triggerEvent('init', {
@@ -159,8 +161,10 @@ Component({
 
           if (typeof callback === 'function') {
             this.chart = callback(canvas, canvasWidth, canvasHeight, canvasDpr)
+          this.triggerEvent('exposeChart', this.chart);
           } else if (this.data.ec && typeof this.data.ec.onInit === 'function') {
             this.chart = this.data.ec.onInit(canvas, canvasWidth, canvasHeight, canvasDpr)
+          this.triggerEvent('exposeChart', this.chart);
           } else {
             this.triggerEvent('init', {
               canvas: canvas,
