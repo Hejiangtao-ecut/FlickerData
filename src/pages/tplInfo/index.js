@@ -19,10 +19,11 @@ Page({
     /**
     * 生命周期函数--监听页面加载
     */
-    async onLoad() {
+    async onLoad(options) {
+        const { tplInfoId } = options;
         const tplData = await getCloudData(PAGEINFO, {
             type: TPLDATA,
-            tplDataId: 'lineChart0'
+            tplDataId: tplInfoId
         });
         if (tplData?.data?.[0]) {
             this.chart.setOption(JSON.parse(tplData.data[0].tplData));

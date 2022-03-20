@@ -11,8 +11,7 @@ Component({
     * 组件的属性列表
     */
     properties: {
-        index: Number,
-        itemData: Object,
+        tplNum: Number,
         isShow: {
             type: Boolean,
             value: false,
@@ -22,7 +21,7 @@ Component({
                 }
                 const listData = await getCloudData(PAGEINFO, {
                     type: TPLINFO,
-                    tplNum: this.data.index
+                    tplNum: this.data.tplNum
                 });
                 if (listData?.data?.[0]) {
                     this.setData({
@@ -48,6 +47,15 @@ Component({
     * 组件的方法列表
     */
     methods: {
-
+        jumpTplInfo(e) {
+            // jumpTplInfo
+            console.log(e);
+            console.log(this.data.tplList);
+            const { index } = e.currentTarget.dataset;
+            const { tplInfoId } = this.data.tplList[index];
+            wx.navigateTo({
+                url: `/pages/tplInfo/index?tplInfoId=${tplInfoId}`
+            });
+        }
     }
 })

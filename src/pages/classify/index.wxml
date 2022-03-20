@@ -24,8 +24,7 @@
         class="swiperItem"
         skip-hidden-item-layout>
         <show-model
-            index="{{index}}"
-            itemData="{{item}}"
+            tplNum="{{index}}"
             isShow="{{index === selected}}"/>
     </swiper-item>
 </swiper>

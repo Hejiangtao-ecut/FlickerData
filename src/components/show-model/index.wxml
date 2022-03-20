@@ -2,7 +2,9 @@
     <view
         class="tplItem"
         wx:for="{{tplList}}"
-        wx:key="index">
+        wx:key="index"
+        data-index="{{index}}"
+        bindtap="jumpTplInfo">
         <view class="tplImg">
             <image src="{{item.imgSrc}}" />
         </view>
