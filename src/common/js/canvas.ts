@@ -43,6 +43,9 @@ export function saveImageToPhotos(ecComponent) {
     });
 }
 
+/**
+ * @doc echarts 通用初始化函数
+ */
 export function initChart(canvas, width, height, dpr) {
     let chart = null;
     chart = echarts.init(canvas, null, {
@@ -52,7 +55,7 @@ export function initChart(canvas, width, height, dpr) {
     });
     canvas.setChart(chart);
 
-    const option = { "series": [{ "data": [820, 932, 901, 934, 1290, 1330, 1320], "type": "line" }], "xAxis": { "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "type": "category" }, "yAxis": { "type": "value" } }
+    const option = {}
 
     chart.setOption(option);
     return chart;

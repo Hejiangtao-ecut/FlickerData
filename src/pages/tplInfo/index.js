@@ -4,6 +4,8 @@
  */
 
 import { saveImageToPhotos, initChart } from '../../common/js/canvas';
+import { getCloudData } from '../../common/js/util';
+import {PAGEINFO, TPLDATA} from '../../common/js/type';
 
 Page({
     data: {
@@ -12,6 +14,19 @@ Page({
         },
         hasChart:false,
         clicked: false,
+    },
+
+    /**
+    * 生命周期函数--监听页面加载
+    */
+    async onLoad() {
+        const tplData = await getCloudData(PAGEINFO, {
+            type: TPLDATA,
+            tplDataId: 'lineChart0'
+        });
+        if (tplData?.data?.[0]) {
+            this.chart.setOption(JSON.parse(tplData.data[0].tplData));
+        }
     },
 
     /**

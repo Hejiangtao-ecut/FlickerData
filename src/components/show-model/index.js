@@ -3,7 +3,8 @@
  * @desc 展示模块
  */
 
-import { checkTplInfo } from '../../common/js/util';
+import { getCloudData } from '../../common/js/util';
+import {PAGEINFO, TPLINFO} from '../../common/js/type';
 
 Component({
     /**
@@ -19,8 +20,11 @@ Component({
                 if (this.data.isGetData) {
                     return;
                 }
-                const listData = await checkTplInfo(this.data.index);
-                if (listData.checkCode) {
+                const listData = await getCloudData(PAGEINFO, {
+                    type: TPLINFO,
+                    tplNum: this.data.index
+                });
+                if (listData?.data?.[0]) {
                     this.setData({
                         isGetData: true,
                         tplList: listData.data[0].tplList
