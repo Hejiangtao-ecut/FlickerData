@@ -3,7 +3,7 @@
  * @desc 分类页面
  */
 
-import { getCloudData, showToast } from '../../common/js/util';
+import { getCloudData, showToast, showLoading } from '../../common/js/util';
 import { PAGEINFO, BASICINFO } from '../../common/js/type';
 
 
@@ -28,6 +28,7 @@ Page({
     * 生命周期函数--监听页面加载
     */
     onLoad: async function (options) {
+        showLoading('数据加载中...', true);
         const data = await getCloudData(PAGEINFO, {
             type: BASICINFO,
             pageName: 'classify'
@@ -39,6 +40,7 @@ Page({
         this.setData({
             list: data?.data?.[0].headList || []
         });
+        wx.hideLoading();
     },
 
     /**

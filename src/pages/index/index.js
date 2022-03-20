@@ -3,7 +3,7 @@
  * @desc 小程序页面
  */
 
-import { getCloudData, showToast } from '../../common/js/util';
+import { getCloudData, showToast, showLoading } from '../../common/js/util';
 import { PAGEINFO, BASICINFO } from '../../common/js/type';
 
 Page({
@@ -19,12 +19,11 @@ Page({
     * 生命周期函数--监听页面加载
     */
     onLoad: async function (options) {
-        // const data = await checkPageInfoData('index');
+        showLoading('数据加载中...', true);
         const data = await getCloudData(PAGEINFO, {
             type: BASICINFO,
             pageName: 'index'
         });
-        console.log(data);
         if (!data?.data?.[0]) {
             showToast('网络错误', 'error');
             return;
@@ -32,5 +31,6 @@ Page({
         this.setData({
             inputModel: data.data?.[0]?.inputModel ?? []
         })
+        wx.hideLoading();
     }
 })
