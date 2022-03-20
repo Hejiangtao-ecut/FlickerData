@@ -3,8 +3,8 @@
  * @desc 小程序页面
  */
 
-import { checkPageInfoData } from '../../common/js/util';
-import { showToast } from '../../common/js/util';
+import { getCloudData, showToast } from '../../common/js/util';
+import { PAGEINFO, BASICINFO } from '../../common/js/type';
 
 Page({
 
@@ -19,13 +19,18 @@ Page({
     * 生命周期函数--监听页面加载
     */
     onLoad: async function (options) {
-        const data = await checkPageInfoData('index');
-        if (!data.checkCode) {
+        // const data = await checkPageInfoData('index');
+        const data = await getCloudData(PAGEINFO, {
+            type: BASICINFO,
+            pageName: 'index'
+        });
+        console.log(data);
+        if (!data?.data?.[0]) {
             showToast('网络错误', 'error');
             return;
         }
         this.setData({
-            inputModel: data.data[0]?.inputModel ?? []
+            inputModel: data.data?.[0]?.inputModel ?? []
         })
     }
 })

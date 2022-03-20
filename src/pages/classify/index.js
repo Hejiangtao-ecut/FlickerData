@@ -3,8 +3,8 @@
  * @desc 分类页面
  */
 
-import { checkPageInfoData } from '../../common/js/util';
-import { showRequestErrToast } from '../../common/js/showToast';
+import { getCloudData, showToast } from '../../common/js/util';
+import { PAGEINFO, BASICINFO } from '../../common/js/type';
 
 
 
@@ -28,13 +28,16 @@ Page({
     * 生命周期函数--监听页面加载
     */
     onLoad: async function (options) {
-        const data = await checkPageInfoData('classify');
-        if (!data.checkCode) {
-            showRequestErrToast();
+        const data = await getCloudData(PAGEINFO, {
+            type: BASICINFO,
+            pageName: 'classify'
+        });
+        if (!data?.data?.[0]) {
+            showToast('网络错误', 'error');
             return;
         }
         this.setData({
-            list: data.data[0].headList || []
+            list: data?.data?.[0].headList || []
         });
     },
 
