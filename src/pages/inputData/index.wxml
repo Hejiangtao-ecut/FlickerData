@@ -1,0 +1,10 @@
+<view class="inputId">
+    <input type="" bindinput="getId" placeholder="id" value="lineChart0" auto-focus/>
+</view>
+<view class="inputData">
+    <input maxlength="-1" bindinput="getData" placeholder="data" auto-focus/>
+</view>
+
+<view bindtap="submit">
+    提交数据
+</view>

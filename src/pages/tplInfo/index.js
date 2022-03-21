@@ -25,8 +25,10 @@ Page({
             type: TPLDATA,
             tplDataId: tplInfoId
         });
+        console.log(tplData.data[0].tplData);
+        // console.log(JSON.parse(tplData.data[0].tplData));
         if (tplData?.data?.[0]) {
-            this.chart.setOption(JSON.parse(tplData.data[0].tplData));
+            this.chart.setOption(tplData.data[0].tplData);
         }
     },
 
