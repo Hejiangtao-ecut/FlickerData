@@ -1,10 +1,15 @@
-<view class="inputId">
-    <input type="" bindinput="getId" placeholder="id" value="lineChart0" auto-focus/>
+<view class="container">
+    <ec-canvas bindexposeChart="getChart" id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}" />
 </view>
 <view class="inputData">
-    <input maxlength="-1" bindinput="getData" placeholder="data" auto-focus/>
+    <textarea
+        class="textArea"
+        maxlength="-1"
+        placeholder="{{tipData}}"
+        bindinput="getData"
+        />
 </view>
 
-<view bindtap="submit">
-    提交数据
+<view wx:if="{{false}}" bindtap="submit">
+    提交预览
 </view>
