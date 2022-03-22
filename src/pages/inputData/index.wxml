@@ -5,7 +5,7 @@
     <textarea
         class="textArea"
         maxlength="-1"
-        placeholder="{{tipData}}"
+        placeholder="JSON示例：{{tipData}}"
         bindinput="getData"
         />
 </view>

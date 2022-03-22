@@ -82,7 +82,7 @@ Page({
             .get({
                 success: function (res) {
                     console.log(res);
-                    // res.data[0] ? THIS.update(res.data[0]._id) : THIS.add();
+                    res.data[0] ? THIS.update(res.data[0]._id) : THIS.add();
                 },
                 fail(e) {
                     console.log('fail---');

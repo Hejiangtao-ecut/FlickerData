@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/inputData/index",
     "pages/classify/index",
     "pages/tplInfo/index",
-    "pages/index/index",
     "pages/personal/index"
   ],
   "window": {

@@ -3,6 +3,8 @@
  * @desc 数据输入样式组件
  */
 
+import {jumpPage} from '../../common/js/util';
+
 Component({
     /**
     * 组件的属性列表
@@ -23,7 +25,10 @@ Component({
     */
     methods: {
         hasClick() {
-            console.log(this.properties.itemData);
+            const { url } = this.data.itemData;
+            if (url) {
+                jumpPage(url);
+            }
         },
         touchstart() {
             // 触摸事件开始
