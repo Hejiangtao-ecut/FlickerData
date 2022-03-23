@@ -101,7 +101,7 @@ const checkCloudFunctionPath = () => path => {
 function addCloudFunction(path, desc, type) {
     const actions = [];
     const pageMap = new Map([
-        ['ts', 'ts.hbs'],
+        ['js', 'js.hbs'],
         ['config', 'config.hbs'],
         ['json', 'json.hbs']
     ]);
@@ -109,7 +109,7 @@ function addCloudFunction(path, desc, type) {
     pageMap.forEach((file, fileName) => {
         let pathName = '';
         switch (fileName) {
-            case 'ts':
+            case 'js':
                 pathName = `${path}/index.${fileName}`;
                 break;
             case 'json':

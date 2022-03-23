@@ -2,5 +2,6 @@
     <data-input
         wx:for="{{inputModel}}"
         wx:key="index"
+        serialId="{{index}}"
         itemData="{{item}}"/>
 </view>

@@ -39,7 +39,7 @@ export function showLoading(title: string, mask: boolean = true) {
  * @param name 云函数名称
  * @param data 原函数调用参数
  */
-export async function getCloudData(name:TYPE.CLOUDNAME, data:TYPE.DATA, retry:boolean = true) {
+export async function getCloudData(name: TYPE.CLOUDNAME, data: TYPE.DATA, retry: boolean = true) {
     return await wx.cloud.callFunction({
         name,
         data
@@ -53,8 +53,25 @@ export async function getCloudData(name:TYPE.CLOUDNAME, data:TYPE.DATA, retry:bo
  * @doc 跳转页面
  * @param {string} url 跳转地址
  */
-export function jumpPage(url:string) {
+export function jumpPage(url: string) {
     wx.navigateTo({
         url
     });
+}
+
+export async function selectFile() {
+    return await wx.chooseMessageFile({
+        count: 1,
+        type: 'file',
+        // success(res) {
+        //     // tempFilePath可以作为img标签的src属性显示图片
+        //     return res.tempFiles
+        // },
+        // fail()
+    })
+        .then(res => {
+            return res.tempFiles[0].path;
+        }, () => {
+            showToast('选择文件无效', 'error');
+        })
 }
