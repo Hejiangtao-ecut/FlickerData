@@ -6,7 +6,7 @@
 const DB = wx.cloud.database().collection("tplData");
 import { saveImageToPhotos, initChart } from '../../common/js/canvas';
 import { showToast, getCloudData } from '../../common/js/util';
-import {PAGEINFO, TPLDATA} from '../../common/js/type';
+import { PAGEINFO, TPLDATA } from '../../common/js/type';
 
 Page({
 
@@ -15,7 +15,7 @@ Page({
     */
     data: {
         data: '',
-        tipData:'',
+        tipData: '',
         ec: {
             onInit: initChart
         },
@@ -30,13 +30,49 @@ Page({
             tplDataId: 'lineChart0'
         });
         if (tplData?.data?.[0]) {
-            this.chart.setOption(tplData.data[0].tplData);
+            console.log('=======');
+            // this.chart.setOption(tplData.data[0].tplData);
             this.setData({
+                data: tplData.data[0].tplData,
                 tipData: JSON.stringify(tplData.data[0].tplData)
             })
         } else {
-            showToast('网络异常','error');
+            showToast('网络异常', 'error');
         }
+        const eventChannel = this.getOpenerEventChannel();
+        const THIS = this;
+        // 监听acceptDataFromOpenerPage事件，获取上一页面通过eventChannel传送到当前页面的数据
+        eventChannel.on('acceptDataFromOpenerPage', function (data) {
+            const option = {
+                legend: {},
+                tooltip: {},
+                dataset: {
+                    // 提供一份数据。
+                    source: [
+                        ['product', '2015', '2016', '2017'],
+                        ['Matcha Latte', 43.3, 85.8, 93.7],
+                        ['Milk Tea', 83.1, 73.4, 55.1],
+                        ['Cheese Cocoa', 86.4, 65.2, 82.5],
+                        ['Walnut Brownie', 72.4, 53.9, 39.1]
+                    ]
+                },
+                // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
+                xAxis: { type: 'category' },
+                // 声明一个 Y 轴，数值轴。
+                yAxis: {},
+                // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
+                series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }]
+            };
+            console.log('getData')
+            console.log(data)
+            // console.log(THIS.data.data);
+            option.dataset.source = data.data.dataTask;
+            console.log(option);
+            THIS.chart.setOption(option);
+            THIS.setData({
+                data: JSON.stringify(option, null, 2)
+            })
+        })
     },
 
     /**
@@ -63,7 +99,7 @@ Page({
         }
         this.chart.setOption(newData);
         this.setData({
-            data: newData
+            data: JSON.stringify(newData, null, 2)
         });
     },
 

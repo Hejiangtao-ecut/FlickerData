@@ -70,3 +70,14 @@ export async function selectFile() {
             showToast('选择文件无效', 'error');
         })
 }
+
+export async function upLoadFile(path: string) {
+    return await wx.cloud.uploadFile({
+        cloudPath: `${+new Date()}.xls`,
+        filePath: path, // 文件路径
+    }).then(res => {
+        return res.fileID
+    }).catch(() => {
+        showToast('解析文件失败', 'error');
+    })
+}

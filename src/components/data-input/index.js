@@ -3,7 +3,7 @@
  * @desc 数据输入样式组件
  */
 
-import { jumpPage, selectFile } from '../../common/js/util';
+import { getCloudData, jumpPage, selectFile, showLoading, showToast, upLoadFile } from '../../common/js/util';
 
 Component({
     /**
@@ -35,90 +35,28 @@ Component({
                 "selectFile": async () => {
                     console.log('selectFile');
                     const filePath = await selectFile();
-                    console.log(filePath);
-                    const fs = wx.getFileSystemManager();
-                    // wx.cloud.callFunction({
-                    //     name: 'getFileData',
-                    //     data: {
-                    //         fileData: filePath
-                    //     }
-                    // })
-                    fs.readFile({
-                        filePath: filePath,
-                        type: 'binary',
-                        position: 0,
-                        success(res) {
-                            const xxx = new Uint8Array(res.data);
-                            const length = xxx.length;
-                            // console.log(xxx.length);
-                            console.log(xxx);
-                            wx.cloud.callFunction({
-                                name: 'getFileData',
-                                data: {
-                                    fileData: wx.cloud.CDN(JSON.stringify(xxx)),
-                                    length
-                                },
-                                success(res) {
-                                    console.log('success');
-                                    console.log(res);
-                                    // res.result.event.fileData.length = length;
-                                    // // console.log(res.result.event.fileData.length);
-                                    // console.log(res.result.event.fileData)
-                                    // console.log(new Uint8Array(res.result.event.fileData));
-                                },
-                                fail(res) {
-                                    console.log('fail');
-                                    console.log(res);
-                                }
-                            })
-                            // wx.cloud.callFunction({
-                            //     name: 'getFileData',
-                            //     data: {
-                            //         fileData: new Uint8Array(res.data)
-                            //     },
-                            //     success(res) {
-                            //         console.log('success');
-                            //         console.log(res);
-                            //     },
-                            //     fail(res) {
-                            //         console.log('fail');
-                            //         console.log(res);
-                            //     }
-                            // })
-                        },
-                        fail(res) {
-                            console.error(res)
-                        }
-                    })
+                    showLoading('数据解析中...')
+                    const fileId = await upLoadFile(filePath);
+                    const fileData = await getCloudData('getFileData', {
+                        fileId
+                    });
+                    if (fileData) {
+                        wx.hideLoading();
+                        showToast('数据解析成功', 'success');
+                        wx.navigateTo({
+                            url: this.data.itemData.url,
+                            success: function(res) {
+                                // 通过eventChannel向被打开页面传送数据
+                                res.eventChannel.emit('acceptDataFromOpenerPage', { data:fileData })
+                            }
+                        })
+                    }
                 },
                 "photograph": () => {
                     console.log('photograph');
                 }
             }
             eventTap[tap]();
-            // 选择文件
-            // wx.chooseMessageFile({
-            //     count: 1,
-            //     type: 'file',
-            //     success(res) {
-            //         // tempFilePath可以作为img标签的src属性显示图片
-            //         const tempFilePaths = res.tempFiles;
-            //         console.log(tempFilePaths[0].path);
-            //         wx.uploadFile({
-            //             url: 'https://666c-flickerdata-4ghcwynx39ecd176-1304585141.tcb.qcloud.la/FlickerImg', //仅为示例，非真实的接口地址
-            //             filePath: tempFilePaths[0].path,
-            //             name: 'file.png',
-            //             success(res) {
-            //                 // const data = res.data
-            //                 //do something
-            //                 console.log(res);
-            //             },
-            //             fail(res) {
-            //                 console.log(res);
-            //             }
-            //         })
-            //     }
-            // })
         },
         touchstart() {
             // 触摸事件开始

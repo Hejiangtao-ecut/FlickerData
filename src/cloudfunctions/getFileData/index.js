@@ -12,25 +12,39 @@ cloud.init({
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-    // event.fileData.length = event.length;
-    // const arrayBuffy = new Uint8Array(event.fileData);
-    // const length = arrayBuffy.length;
-
-
-
-
-
+    const { fileId } = event;
     const res = await cloud.downloadFile({
-        fileID: 'cloud://flickerdata-4ghcwynx39ecd176.666c-flickerdata-4ghcwynx39ecd176-1304585141/1821802班级学生核酸检测时间表 上午11.45.03.xlsx',
+        fileID: fileId,
+    })
+    cloud.deleteFile({
+        fileList:[fileId]
     })
     const buffer = res.fileContent;
-    console.log(buffer);
-    const sheets = XLSX.parse(buffer);
-    const length = sheets.length;
+    const sheet = XLSX.parse(buffer);
+    const fileArray = sheet && sheet[0] && sheet[0].data || '';
 
-
-    return {
-        sheets,
-        length
+    if (fileArray && fileArray.length) {
+        let title = '';
+        const dataTask = [];
+        let i = 0;
+        while (fileArray[i].length) {
+            if (fileArray[i].length === 1) {
+                i === 0 ? title = fileArray[i][0] : '';
+                i++;
+                continue;
+            }
+            dataTask.push(fileArray[i]);
+            i++;
+        }
+        console.log(title);
+        console.log(dataTask);
+        title = title.trim();
+        return {
+            title,
+            dataTask
+        }
     }
+
+
+    return;
 }
