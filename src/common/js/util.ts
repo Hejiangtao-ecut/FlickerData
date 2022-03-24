@@ -62,12 +62,7 @@ export function jumpPage(url: string) {
 export async function selectFile() {
     return await wx.chooseMessageFile({
         count: 1,
-        type: 'file',
-        // success(res) {
-        //     // tempFilePath可以作为img标签的src属性显示图片
-        //     return res.tempFiles
-        // },
-        // fail()
+        type: 'file'
     })
         .then(res => {
             return res.tempFiles[0].path;

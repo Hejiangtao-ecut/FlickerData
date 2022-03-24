@@ -4,7 +4,6 @@
  */
 
 import { jumpPage, selectFile } from '../../common/js/util';
-const XSLS = require('./xlsl-core');
 
 Component({
     /**
@@ -38,14 +37,54 @@ Component({
                     const filePath = await selectFile();
                     console.log(filePath);
                     const fs = wx.getFileSystemManager();
+                    // wx.cloud.callFunction({
+                    //     name: 'getFileData',
+                    //     data: {
+                    //         fileData: filePath
+                    //     }
+                    // })
                     fs.readFile({
                         filePath: filePath,
-                        encoding: 'utf8',
+                        type: 'binary',
                         position: 0,
                         success(res) {
-                            console.log(res);
-                            const data = XSLS.read(res, {type:'utf8'});
-                            console.log(data);
+                            const xxx = new Uint8Array(res.data);
+                            const length = xxx.length;
+                            // console.log(xxx.length);
+                            console.log(xxx);
+                            wx.cloud.callFunction({
+                                name: 'getFileData',
+                                data: {
+                                    fileData: wx.cloud.CDN(JSON.stringify(xxx)),
+                                    length
+                                },
+                                success(res) {
+                                    console.log('success');
+                                    console.log(res);
+                                    // res.result.event.fileData.length = length;
+                                    // // console.log(res.result.event.fileData.length);
+                                    // console.log(res.result.event.fileData)
+                                    // console.log(new Uint8Array(res.result.event.fileData));
+                                },
+                                fail(res) {
+                                    console.log('fail');
+                                    console.log(res);
+                                }
+                            })
+                            // wx.cloud.callFunction({
+                            //     name: 'getFileData',
+                            //     data: {
+                            //         fileData: new Uint8Array(res.data)
+                            //     },
+                            //     success(res) {
+                            //         console.log('success');
+                            //         console.log(res);
+                            //     },
+                            //     fail(res) {
+                            //         console.log('fail');
+                            //         console.log(res);
+                            //     }
+                            // })
                         },
                         fail(res) {
                             console.error(res)
@@ -54,7 +93,6 @@ Component({
                 },
                 "photograph": () => {
                     console.log('photograph');
-                    console.log(XSLS);
                 }
             }
             eventTap[tap]();
