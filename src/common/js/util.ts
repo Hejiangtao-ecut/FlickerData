@@ -53,7 +53,7 @@ export async function getCloudData(name: TYPE.CLOUDNAME, data: TYPE.DATA, retry:
  * @doc 跳转页面
  * @param {string} url 跳转地址
  */
-export function jumpPage(url: string) {
+export function jumpPage(url: string, data: object = {}) {
     wx.navigateTo({
         url
     });

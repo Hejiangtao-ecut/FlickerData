@@ -19,57 +19,77 @@ Page({
         ec: {
             onInit: initChart
         },
+        hasChart: false
     },
 
     /**
     * 生命周期函数--监听页面加载
     */
-    async onLoad() {
+    async onLoad(option) {
+        console.log(option);
+        const { type } = option;
+        const eventCenter = {
+            "input": () => {
+                this.getTipData();
+            },
+            "fileInput": () => {
+                this.getChannelData();
+            },
+            "imgInput": () => {
+                this.getChannelData();
+            }
+        }
+        eventCenter[type]();
+    },
+
+    /**
+     * @doc 手动输入模式，提供一个默认的案例进行提示
+     */
+    async getTipData() {
         const tplData = await getCloudData(PAGEINFO, {
             type: TPLDATA,
             tplDataId: 'lineChart0'
         });
         if (tplData?.data?.[0]) {
-            console.log('=======');
+            this.setOption(tplData.data[0].tplData);
             // this.chart.setOption(tplData.data[0].tplData);
             this.setData({
-                data: tplData.data[0].tplData,
                 tipData: JSON.stringify(tplData.data[0].tplData)
             })
         } else {
             showToast('网络异常', 'error');
         }
+    },
+
+    /**
+     * 将数组转换成 echart 初始化数据
+     */
+    getChannelData() {
         const eventChannel = this.getOpenerEventChannel();
-        const THIS = this;
-        // 监听acceptDataFromOpenerPage事件，获取上一页面通过eventChannel传送到当前页面的数据
-        eventChannel.on('acceptDataFromOpenerPage', function (data) {
+        eventChannel.on('acceptDataFromOpenerPage', (data) => {
             const option = {
+                title: {
+                    text: ''
+                },
                 legend: {},
                 tooltip: {},
                 dataset: {
-                    // 提供一份数据。
-                    source: [
-                        ['product', '2015', '2016', '2017'],
-                        ['Matcha Latte', 43.3, 85.8, 93.7],
-                        ['Milk Tea', 83.1, 73.4, 55.1],
-                        ['Cheese Cocoa', 86.4, 65.2, 82.5],
-                        ['Walnut Brownie', 72.4, 53.9, 39.1]
-                    ]
+                    sourceHeader: true
                 },
-                // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
                 xAxis: { type: 'category' },
-                // 声明一个 Y 轴，数值轴。
                 yAxis: {},
-                // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
-                series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }]
+                series: []
             };
-            console.log('getData')
-            console.log(data)
-            // console.log(THIS.data.data);
             option.dataset.source = data.data.dataTask;
-            console.log(option);
-            THIS.chart.setOption(option);
-            THIS.setData({
+            if (data.data.title) {
+                option.title.text = data.data.title;
+            };
+            const length = data.data.dataTask[0].length;
+            // 默认设置每一项属性值为柱状图
+            option.series = new Array(length).fill({ type: 'bar' });
+            option.series.pop();
+            this.setOption(option);
+            this.setData({
                 data: JSON.stringify(option, null, 2)
             })
         })
@@ -83,6 +103,25 @@ Page({
         // 获取 chart，进行数据操纵
         if (e.detail) {
             this.chart = e.detail;
+            this.setData({
+                hasChart: true
+            })
+        }
+    },
+
+    /**
+     * @doc 初次注入数据，有时候数据比实例先拿到，兼容一下等拿到实例再初始化
+     */
+    setOption(data) {
+        if (this.data.hasChart) {
+            this.chart.setOption(data);
+            if (this.intval) {
+                clearInterval(this.intval);
+            }
+        } else if(!this.intval) {
+            this.intval = setInterval(() => {
+                this.setOption(data);
+            }, 100);
         }
     },
 
@@ -93,14 +132,14 @@ Page({
         let newData = '';
         try {
             newData = JSON.parse(e.detail.value);
+            console.log(newData);
+            this.chart.setOption(newData);
+            this.setData({
+                data: JSON.stringify(newData, null, 2)
+            });
         } catch (error) {
-            showToast('json数据异常', 'error');
-            return e.detail.value;
         }
-        this.chart.setOption(newData);
-        this.setData({
-            data: JSON.stringify(newData, null, 2)
-        });
+        return e.detail.value;
     },
 
     /**

@@ -33,23 +33,29 @@ Component({
                     jumpPage(this.data.itemData.url);
                 },
                 "selectFile": async () => {
-                    console.log('selectFile');
                     const filePath = await selectFile();
                     showLoading('数据解析中...')
                     const fileId = await upLoadFile(filePath);
                     const fileData = await getCloudData('getFileData', {
                         fileId
                     });
+                    wx.hideLoading();
                     if (fileData) {
-                        wx.hideLoading();
                         showToast('数据解析成功', 'success');
                         wx.navigateTo({
                             url: this.data.itemData.url,
-                            success: function(res) {
+                            success: function (res) {
+                                console.log('tiao')
                                 // 通过eventChannel向被打开页面传送数据
-                                res.eventChannel.emit('acceptDataFromOpenerPage', { data:fileData })
+                                console.log(fileData);
+                                res.eventChannel.emit('acceptDataFromOpenerPage', { data: fileData })
+                            },
+                            fail: () => {
+                                showToast('页面地址错误', 'error');
                             }
                         })
+                    } else {
+                        showToast('数据解析失败', ' fail');
                     }
                 },
                 "photograph": () => {
