@@ -113,9 +113,7 @@ Component({
                     image: fileData
                 },
                 success: (res) => {
-                    console.log(res);
                     const { body } = res.data.forms_result[0];
-                    console.log(body);
                     this.analysis(body);
                 },
                 fail: () => {
