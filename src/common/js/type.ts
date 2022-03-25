@@ -1,8 +1,12 @@
-// 云函数名称
 /**
  * pageInfo 云函数名称
  */
 export const PAGEINFO = 'pageInfo';
+
+/**
+ * userInfo 云函数
+ */
+export const USERINFO = 'userInfo';
 
 /**
  *  页面结构信息
@@ -18,6 +22,18 @@ export const TPLINFO = 'tplInfo';
  * 模板数据
  */
 export const TPLDATA = 'tplData';
+
+/**
+ * 获取 openId
+ */
+export const OPENID = 'openId';
+
+/**
+ * 获取用户基础信息
+ */
+export const USERMESSAGE = 'userMessage';
+
+export const REGISTER = 'register';
 
 export type Icon = "error" | "success" | "loading" | "none";
 

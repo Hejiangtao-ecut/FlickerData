@@ -9,13 +9,19 @@ cloud.init({
     env: 'flickerdata-4ghcwynx39ecd176'
 })
 
+const openId = require('./getOpenId/index');
+const userMessage = require('./getUserMessage/index');
+const registerUser = require('./registerUser/index');
+
 // 云函数入口函数
 exports.main = async (event, context) => {
-    const wxContext = cloud.getWXContext()
-
-    return {
-        event,
-        wxContext,
-        context
+    switch (event.type) {
+        case 'openId':
+            return openId.main(event, context);
+        case 'userMessage':
+            return userMessage.main(event, context);
+        case 'register':
+            return registerUser.main(event, context);
     }
+
 }

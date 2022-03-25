@@ -1,1 +1,22 @@
-<view>personal page</view>
+<view class="userInfo">
+    <view class="avatar">
+        <button
+            style="width: 100%;height: 100%;padding: 0;"
+            open-type="chooseAvatar"
+            bindchooseavatar="demo">
+            <image src="{{avatarUrl}}"/>
+        </button>
+    </view>
+    <view class="message">
+        <view class="name">
+            {{nickName}}
+        </view>
+        <view>
+            您云端共有{{dataList.length}}条数据
+        </view>
+    </view>
+</view>
+
+<view>
+    {{userInfo}}
+</view>

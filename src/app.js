@@ -1,4 +1,6 @@
-// app.js
+import { getCloudData } from './common/js/util';
+import {USERINFO, OPENID} from './common/js/type';
+
 App({
   globalData: {
     isAuth: false,
@@ -22,7 +24,6 @@ App({
 
     // 请求授权信息
     const authList = await wx.getSetting().then(e => e.authSetting);
-    console.log(authList);
     this.globalData.isAuth = authList['scope.userInfo'];
     this.globalData.isWritePhotosAlbum = authList['scope.writePhotosAlbum'];
     if (!authList['scope.userInfo']) {
@@ -32,5 +33,14 @@ App({
         }
       })
     }
+
+    // 获取openId
+    getCloudData(USERINFO, {
+      type: OPENID
+    }).then(res => {
+      if (res.openid) {
+        this.globalData.openid = res.openid;
+      }
+    })
   }
 });
