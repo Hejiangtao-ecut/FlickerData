@@ -12,6 +12,7 @@ cloud.init({
 const openId = require('./getOpenId/index');
 const userMessage = require('./getUserMessage/index');
 const registerUser = require('./registerUser/index');
+const upAvatar = require('./upAvata/index');
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -22,6 +23,8 @@ exports.main = async (event, context) => {
             return userMessage.main(event, context);
         case 'register':
             return registerUser.main(event, context);
+        case 'upAvatar':
+            return upAvatar.main(event, context);
     }
 
 }

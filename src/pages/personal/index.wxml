@@ -1,22 +1,19 @@
-<view class="userInfo">
+<view class="userInfo" bindtap="ccc">
     <view class="avatar">
         <button
             style="width: 100%;height: 100%;padding: 0;"
             open-type="chooseAvatar"
-            bindchooseavatar="demo">
-            <image src="{{avatarUrl}}"/>
+            bindchooseavatar="changeAvarat">
+            <image src="{{avatarUrl}}" type="nickname"/>
         </button>
     </view>
     <view class="message">
         <view class="name">
             {{nickName}}
+            <input wx:if="{{isClick}}" class="ddd" type="" placeholder="" auto-focus/>
         </view>
         <view>
             您云端共有{{dataList.length}}条数据
         </view>
     </view>
-</view>
-
-<view>
-    {{userInfo}}
 </view>

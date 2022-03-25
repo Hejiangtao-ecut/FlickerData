@@ -33,7 +33,15 @@ export const OPENID = 'openId';
  */
 export const USERMESSAGE = 'userMessage';
 
+/**
+ * 注册新用户
+ */
 export const REGISTER = 'register';
+
+/**
+ * 更换头像
+ */
+export const UPAVATAR = 'upAvatar';
 
 export type Icon = "error" | "success" | "loading" | "none";
 

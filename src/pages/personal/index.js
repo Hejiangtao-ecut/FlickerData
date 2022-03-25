@@ -3,8 +3,8 @@
  * @desc 个人中心
  */
 
-import { USERINFO, USERMESSAGE, REGISTER } from '../../common/js/type';
-import { getCloudData, upLoadFile } from '../../common/js/util';
+import { USERINFO, USERMESSAGE, REGISTER, UPAVATAR } from '../../common/js/type';
+import { getCloudData, showLoading, upLoadAvatar } from '../../common/js/util';
 
 const App = getApp();
 
@@ -33,7 +33,6 @@ Page({
             type: USERMESSAGE
         })
             .then(res => {
-                console.log(res);
                 if (res.data.length) {
                     // 老用户
                     const { dataList, nickName, avatarUrl } = res.data[0];
@@ -42,28 +41,41 @@ Page({
                         avatarUrl,
                         nickName
                     })
-                } else {
-                    // 新用户，注册数据
-                    getCloudData(USERINFO, {
-                        type: REGISTER
-                    })
+                    return;
                 }
+                // 新用户，注册数据
+                getCloudData(USERINFO, {
+                    type: REGISTER
+                })
             });
     },
 
-    demo(e) {
-        console.log('----')
+    changeAvarat(e) {
+        showLoading('头像更新中...');
         const { avatarUrl } = e.detail;
         wx.saveFile({
             tempFilePath: avatarUrl,
-            success(res) {
+            success: (res) => {
                 const savedFilePath = res.savedFilePath;
-                upLoadFile(savedFilePath);
+                upLoadAvatar(savedFilePath).then(res => {
+                    this.setData({
+                        avatarUrl: res
+                    });
+                    getCloudData(USERINFO, {
+                        type: UPAVATAR,
+                        avatarUrl: res
+                    })
+                });
+            },
+            complete: () => {
+                wx.hideLoading();
             }
-        })
+        });
+    },
+
+    ccc() {
         this.setData({
-            avatarUrl,
-            userInfo: JSON.stringify(e, null, 2)
+            isClick: true
         })
     }
 })

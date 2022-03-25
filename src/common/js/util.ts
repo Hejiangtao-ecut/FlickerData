@@ -90,6 +90,21 @@ export async function upLoadFile(path: string) {
 }
 
 /**
+ * @doc 上传头像至云端
+ * @param {string} path 文件地址
+ */
+export async function upLoadAvatar(path: string) {
+    return await wx.cloud.uploadFile({
+        cloudPath: `${+new Date()}.png`,
+        filePath: path, // 文件路径
+    }).then(res => {
+        return res.fileID
+    }).catch(() => {
+        showToast('解析文件失败', 'error');
+    })
+}
+
+/**
  * @doc 选择文件
  */
 export async function chooseImg() {
