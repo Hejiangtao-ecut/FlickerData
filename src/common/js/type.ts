@@ -36,3 +36,13 @@ export interface DATA {
      */
     [key: string]: string;
 }
+
+/**
+ * 获取 token 地址
+ */
+export const TOKEN = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=1Hxa7BUZP0EqlWDryQoKEe8i&client_secret=sPCLwXa5VPPEH0pPUNpo3Dw1XtPwtCm0&';
+
+/**
+ * 获取表格数据地址
+ */
+export const FORMDATA = 'https://aip.baidubce.com/rest/2.0/ocr/v1/form?access_token=';

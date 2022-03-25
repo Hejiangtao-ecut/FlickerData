@@ -1,8 +1,7 @@
 <view
     class="container {{hasClick ? 'hasSelect' : ''}}"
     bindtap="hasClick"
-    bindtouchstart="touchstart"
-    bindtouchend="touchend">
+    bindtouchstart="touchstart">
     <image class="imgIcon" src="{{itemData.imgSrc}}"/>
     <view class="textArea">
         <view class="title">

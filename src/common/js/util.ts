@@ -59,6 +59,9 @@ export function jumpPage(url: string, data: object = {}) {
     });
 }
 
+/**
+ * @doc 选择文件
+ */
 export async function selectFile() {
     return await wx.chooseMessageFile({
         count: 1,
@@ -71,6 +74,10 @@ export async function selectFile() {
         })
 }
 
+/**
+ * @doc 上传文件至云端，云端读取数据后会自动删除云端记录
+ * @param {string} path 文件地址
+ */
 export async function upLoadFile(path: string) {
     return await wx.cloud.uploadFile({
         cloudPath: `${+new Date()}.xls`,
@@ -80,4 +87,15 @@ export async function upLoadFile(path: string) {
     }).catch(() => {
         showToast('解析文件失败', 'error');
     })
+}
+
+/**
+ * @doc 选择文件
+ */
+export async function chooseImg() {
+    return await wx.chooseImage({
+        count: 1
+    })
+        .then(res => res.tempFilePaths[0])
+        .catch(() => { showToast('请再次选择图片', 'error'); });
 }
