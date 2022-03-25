@@ -1,6 +1,10 @@
 // app.js
 App({
-  onLaunch: function () {
+  globalData: {
+    isAuth: false,
+    isWritePhotosAlbum: false,
+  },
+  onLaunch: async function () {
     // 判断是否存在云能力
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力');
@@ -16,6 +20,17 @@ App({
       });
     }
 
-    this.globalData = {};
+    // 请求授权信息
+    const authList = await wx.getSetting().then(e => e.authSetting);
+    console.log(authList);
+    this.globalData.isAuth = authList['scope.userInfo'];
+    this.globalData.isWritePhotosAlbum = authList['scope.writePhotosAlbum'];
+    if (!authList['scope.userInfo']) {
+      wx.getUserInfo({
+        success: () => {
+          this.globalData.isAuth = true;
+        }
+      })
+    }
   }
 });
