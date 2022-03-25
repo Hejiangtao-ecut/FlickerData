@@ -26,7 +26,6 @@ Page({
     * 生命周期函数--监听页面加载
     */
     async onLoad(option) {
-        console.log(option);
         const { type } = option;
         const eventCenter = {
             "input": () => {
@@ -79,11 +78,11 @@ Page({
                 yAxis: {},
                 series: []
             };
-            option.dataset.source = data.data.dataTask;
-            if (data.data.title) {
-                option.title.text = data.data.title;
+            option.dataset.source = data.dataTask;
+            if (data.title) {
+                option.title.text = data.title;
             };
-            const length = data.data.dataTask[0].length;
+            const length = data.dataTask[0].length;
             // 默认设置每一项属性值为柱状图
             option.series = new Array(length).fill({ type: 'bar' });
             option.series.pop();
@@ -159,7 +158,6 @@ Page({
                     res.data[0] ? THIS.update(res.data[0]._id) : THIS.add();
                 },
                 fail(e) {
-                    console.log('fail---');
                     console.log(e);
                 }
             })

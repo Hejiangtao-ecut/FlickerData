@@ -62,37 +62,102 @@ Component({
                     if (!path) {
                         return;
                     }
+                    showLoading('数据提取中...');
                     const fs = wx.getFileSystemManager();
                     fs.readFile({
                         filePath: path,
                         encoding: 'base64',
-                        success(res) {
+                        success: (res) => {
                             const fileData = res.data;
-                            wx.request({
-                                url: TOKEN,
-                                success(res) {
-                                    // 获取到 token
-                                    const { access_token } = res.data;
-                                    wx.request({
-                                        url: `${FORMDATA}${access_token}&`,
-                                        method: 'POST',
-                                        header: {
-                                            "content-type": 'application/x-www-form-urlencoded'
-                                        },
-                                        data: {
-                                            image: fileData
-                                        },
-                                        success(res) {
-                                            console.log(res);
-                                        }
-                                    })
-                                }
-                            })
+                            this.getToken(fileData);
+                        },
+                        fail: () => {
+                            wx.hideLoading();
+                            showToast('数据提取失败', ' fail');
                         }
                     })
                 }
             }
             eventTap[tap]();
+        },
+
+        /**
+         * @doc 获取处理图片的认证
+         */
+        getToken(fileData) {
+            wx.request({
+                url: TOKEN,
+                success: (res) => {
+                    // 获取到 token
+                    const { access_token } = res.data;
+                    this.getImgData(access_token, fileData);
+                },
+                fail: () => {
+                    wx.hideLoading();
+                    showToast('数据提取失败', ' fail');
+                }
+            })
+        },
+
+        /**
+         * @doc 获取图片数据
+         */
+        getImgData(access_token, fileData) {
+            wx.request({
+                url: `${FORMDATA}${access_token}&`,
+                method: 'POST',
+                header: {
+                    "content-type": 'application/x-www-form-urlencoded'
+                },
+                data: {
+                    image: fileData
+                },
+                success: (res) => {
+                    console.log(res);
+                    const { body } = res.data.forms_result[0];
+                    console.log(body);
+                    this.analysis(body);
+                },
+                fail: () => {
+                    wx.hideLoading();
+                    showToast('数据提取失败', ' fail');
+                }
+            });
+        },
+
+        /**
+         * @doc 分析图片读取数据
+         */
+        analysis(bodyData) {
+            // 用来提取数据
+            const extract = [];
+
+            bodyData.forEach(item => {
+                const { column, row, words } = item;
+                // 对应行不存在数组的时候创建一个
+                if (!extract[row]) {
+                    extract[row] = [];
+                }
+                extract[row][column] = words;
+            });
+
+            // 存放最终有效数据
+            const realData = [];
+            // 过滤无效空数据，最后提取出真正的二维表格数据
+            extract.forEach((item) => {
+                const arr = item.filter(v => v);
+                arr.length ? realData.push(arr) : '';
+            });
+            const finalData = {
+                title: '',
+                dataTask:realData
+            }
+            if (realData[0].length === 1) {
+                finalData.title = realData[0][0];
+                realData.shift();
+            }
+            wx.hideLoading();
+            this.jumpWithData(finalData);
         },
 
         /**
@@ -103,7 +168,7 @@ Component({
                 url: this.data.itemData.url,
                 success: function (res) {
                     // 通过eventChannel向被打开页面传送数据
-                    res.eventChannel.emit('acceptDataFromOpenerPage', { data: fileData })
+                    res.eventChannel.emit('acceptDataFromOpenerPage', fileData)
                 },
                 fail: () => {
                     showToast('页面地址错误', 'error');
