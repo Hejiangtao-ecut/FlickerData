@@ -52,7 +52,6 @@ Page({
         });
         if (tplData?.data?.[0]) {
             this.setOption(tplData.data[0].tplData);
-            // this.chart.setOption(tplData.data[0].tplData);
             this.setData({
                 tipData: JSON.stringify(tplData.data[0].tplData)
             })
