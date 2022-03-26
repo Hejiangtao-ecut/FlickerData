@@ -114,3 +114,15 @@ export async function chooseImg() {
         .then(res => res.tempFilePaths[0])
         .catch(() => { showToast('请再次选择图片', 'error'); });
 }
+
+/**
+ * @doc 复制内容到剪贴板
+ */
+export function setClipboardData(data) {
+    wx.setClipboardData({
+        data,
+        fail:() => {
+            showToast('复制失败', 'error');
+        }
+    })
+}

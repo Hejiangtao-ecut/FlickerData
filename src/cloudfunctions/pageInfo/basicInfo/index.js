@@ -8,7 +8,7 @@ cloud.init({
 });
 
 exports.main = async (event, context) => {
-    const pageList = ['index', 'classify'];
+    const pageList = ['index', 'classify', 'inputData'];
     if (!pageList.includes(event.pageName)) {
         return {
             errMsg: 'pageName not found'

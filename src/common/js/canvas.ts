@@ -6,6 +6,58 @@
 import { showToast, showLoading } from './util';
 const echarts = require('../../components/ec-canvas/echarts');
 
+/**
+ * 申请授权并保存图片
+ */
+export function authSaveImage(ecComponent) {
+    const App = getApp();
+    wx.authorize({
+        scope: 'scope.writePhotosAlbum',
+        success(e) {
+            App.globalData.isWritePhotosAlbum = true;
+            saveImageToPhotos(ecComponent);
+        },
+        fail(e) {
+            console.log(e);
+            showToast('授权失败', 'error');
+        }
+    })
+}
+
+export async function saveUserEcImg(ecComponent) {
+    // 未获取到实例，直接结束保存图片
+    if (!ecComponent || !ecComponent.canvasToTempFilePath) {
+        wx.hideLoading();
+        return;
+    };
+
+    return new Promise((res, rej) => {
+        // 先保存图片到临时的本地文件，然后存入系统相册
+        ecComponent.canvasToTempFilePath({
+            success: (e) => {
+                console.log('success');
+                console.log(e);
+                // res(e);
+                wx.cloud.uploadFile({
+                    cloudPath: `userEcImg/${+new Date()}.png`,
+                    filePath: e.tempFilePath,
+                    success: (e) => {
+                        console.log(e);
+                        res(e);
+                    },
+                    fail: (e) => {
+                        rej(e);
+                    }
+                })
+            },
+            fail: (e) => {
+                console.log('fail');
+                console.log(e);
+                rej(e);
+            }
+        })
+    })
+}
 
 /**
  * @doc 将 canvas 实例保存为图片至本地

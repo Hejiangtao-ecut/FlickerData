@@ -1,5 +1,5 @@
 import { getCloudData } from './common/js/util';
-import {USERINFO, OPENID} from './common/js/type';
+import { USERINFO, REGISTER, USERMESSAGE } from './common/js/type';
 
 App({
   globalData: {
@@ -11,12 +11,7 @@ App({
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力');
     } else {
-      // 云开发环境初始化
       wx.cloud.init({
-        // env 参数说明：
-        //   env 参数决定接下来小程序发起的云开发调用（wx.cloud.xxx）会默认请求到哪个云环境的资源
-        //   此处请填入环境 ID, 环境 ID 可打开云控制台查看
-        //   如不填则使用默认环境（第一个创建的环境）
         env: 'flickerdata-4ghcwynx39ecd176',
         traceUser: true,
       });
@@ -34,13 +29,15 @@ App({
       })
     }
 
-    // 获取openId
+    // 获取一次用户信息，不存在则是新用户，注册一下
     getCloudData(USERINFO, {
-      type: OPENID
+      type: USERMESSAGE
     }).then(res => {
-      if (res.openid) {
-        this.globalData.openid = res.openid;
+      if (!res.data[0]) {
+        getCloudData(USERINFO, {
+          type: REGISTER
+        })
       }
-    })
+    });
   }
 });

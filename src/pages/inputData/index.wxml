@@ -11,6 +11,13 @@
         />
 </view>
 
-<view wx:if="{{false}}" bindtap="submit">
-    提交预览
+<view wx:if="{{imgList.length}}" class="tab" class="tabView">
+    <view
+        class="icon"
+        wx:for="{{imgList}}"
+        wx:key="index"
+        data-index="{{index}}"
+        bindtap="switchFunc">
+        <image src="{{item}}" />
+    </view>
 </view>

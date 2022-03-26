@@ -3,10 +3,11 @@
  * @desc 小程序页面
  */
 
-const DB = wx.cloud.database().collection("tplData");
-import { saveImageToPhotos, initChart } from '../../common/js/canvas';
-import { showToast, getCloudData } from '../../common/js/util';
-import { PAGEINFO, TPLDATA } from '../../common/js/type';
+import { saveImageToPhotos, initChart, authSaveImage, saveUserEcImg} from '../../common/js/canvas';
+import { showToast, getCloudData, setClipboardData } from '../../common/js/util';
+import { ADDUSERECDATA, BASICINFO, INPUTDATA, PAGEINFO, TPLDATA, USERINFO } from '../../common/js/type';
+
+const App = getApp();
 
 Page({
 
@@ -19,13 +20,23 @@ Page({
         ec: {
             onInit: initChart
         },
-        hasChart: false
+        hasChart: false,
+        imgList:[]
     },
 
     /**
     * 生命周期函数--监听页面加载
     */
     async onLoad(option) {
+        getCloudData(PAGEINFO, {
+            type: BASICINFO,
+            pageName: INPUTDATA
+        }).then(res => {
+            this.setData({
+                imgList: res.data[0].imgList || []
+            })
+        })
+
         const { type } = option;
         const eventCenter = {
             "input": () => {
@@ -141,64 +152,42 @@ Page({
     },
 
     /**
-     * 提交数据
+     * 事件中心
      */
-    submit() {
-        if (!(this.data.id && this.data.data)) {
-            showToast('请输入数据！', 'error');
-            return;
-        }
-        const THIS = this;
-        DB.where({
-            tplDataId: this.data.id
-        })
-            .get({
-                success: function (res) {
-                    console.log(res);
-                    res.data[0] ? THIS.update(res.data[0]._id) : THIS.add();
-                },
-                fail(e) {
-                    console.log(e);
-                }
-            })
-    },
+    switchFunc(e) {
+        const { index } = e.currentTarget.dataset;
+        const funcList = ['setClip', 'saveImg', 'upCloud'];
+        const funcCenter = {
+            'setClip': () => {
+                setClipboardData(this.data.data);
+            },
+            'saveImg': () => {
+                const chartDom = this.selectComponent('#mychart-dom-bar');
+                App.globalData.isWritePhotosAlbum ? saveImageToPhotos(chartDom) : authSaveImage(chartDom);
+            },
+            'upCloud': async () => {
+                // 更新数据
+                // 存数据，存图片，然后把数据和图片整合在一起
+                // Promise.all([])
 
-    /**
-     * 更新数据
-     */
-    update(id) {
-        const x = JSON.parse(this.data.data);
-        const THIS = this;
-        DB.doc(id).update({
-            data: {
-                tplData: x
-            },
-            success(res) {
-                console.log(res);
-                res.stats.updated ? showToast("更新数据成功", 'success') : showToast("更新数据失败", 'error');
-                THIS.setData({
-                    data: '',
-                    id: 'dataset'
+                // 存数据，OK
+                console.log('----');
+                const upData = await getCloudData(USERINFO, {
+                    type: ADDUSERECDATA,
+                    tplData: this.data.data || 'ddddd'
+                }).then(res => {
+                    console.log(res);
+                }).catch(e => {
+                    console.log(e);
                 });
+                console.log(upData);
+
+
+                // const filePath = await saveUserEcImg(this.selectComponent('#mychart-dom-bar'));
+                // console.log('====2');
+                // console.log(filePath);
             }
-        });
-    },
-    add() {
-        const x = JSON.parse(this.data.data);
-        const THIS = this;
-        DB.add({
-            data: {
-                tplDataId: this.data.id,
-                tplData: x
-            },
-            success(res) {
-                console.log(res)
-                showToast("添加数据成功", 'success');
-                THIS.setData({
-                    data: '',
-                    id: ''
-                });
-            }
-        });
+        }
+        funcCenter[funcList[index]]();
     }
 })

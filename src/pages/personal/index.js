@@ -35,21 +35,12 @@ Page({
             type: USERMESSAGE
         })
             .then(res => {
-                if (res.data.length) {
-                    // 老用户
-                    const { dataList, nickName, avatarUrl } = res.data[0];
+                    const { dataList } = res.data[0];
                     this.setData({
-                        dataList,
-                        avatarUrl,
-                        nickName
+                        dataList
                     })
-                    return;
                 }
-                // 新用户，注册数据
-                getCloudData(USERINFO, {
-                    type: REGISTER
-                })
-            }).finally(() => {
+            ).finally(() => {
                 wx.hideLoading();
             });
     },

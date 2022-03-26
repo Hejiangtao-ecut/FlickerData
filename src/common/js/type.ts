@@ -1,4 +1,23 @@
 /**
+ * @file type 常量定义合集
+ * @author hejiangtao
+ */
+
+export interface DATA {
+    /**
+     * 云函数子类
+     */
+    type: 'basicInfo' | 'tplInfo' | 'tplData' | 'pageInfo';
+    /**
+     * 自定义字段
+     */
+    [key: string]: string;
+}
+
+export type Icon = "error" | "success" | "loading" | "none";
+
+
+/**
  * pageInfo 云函数名称
  */
 export const PAGEINFO = 'pageInfo';
@@ -28,6 +47,8 @@ export const TPLDATA = 'tplData';
  */
 export const OPENID = 'openId';
 
+export const INPUTDATA = 'inputData';
+
 /**
  * 获取用户基础信息
  */
@@ -48,23 +69,15 @@ export const UPAVATAR = 'upAvatar';
  */
 export const UPNICKNAME = 'upNickName';
 
-export type Icon = "error" | "success" | "loading" | "none";
+/**
+ * 用户添加可视化数据
+ */
+export const ADDUSERECDATA = 'addUserData';
 
 /**
  * 云函数名称
  */
 export type CLOUDNAME = 'pageInfo';
-
-export interface DATA {
-    /**
-     * 云函数子类
-     */
-    type: 'basicInfo' | 'tplInfo' | 'tplData' | 'pageInfo';
-    /**
-     * 自定义字段
-     */
-    [key: string]: string;
-}
 
 /**
  * 获取 token 地址
