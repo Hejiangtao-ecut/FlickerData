@@ -47,6 +47,9 @@ export const TPLDATA = 'tplData';
  */
 export const OPENID = 'openId';
 
+/**
+ * inputData 页面
+ */
 export const INPUTDATA = 'inputData';
 
 /**
@@ -73,6 +76,11 @@ export const UPNICKNAME = 'upNickName';
  * 用户添加可视化数据
  */
 export const ADDUSERECDATA = 'addUserData';
+
+/**
+ * 将添加的数据同步到用户名下
+ */
+export const ADDDATALIST = 'addDataList';
 
 /**
  * 云函数名称

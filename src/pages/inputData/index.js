@@ -3,9 +3,19 @@
  * @desc 小程序页面
  */
 
-import { saveImageToPhotos, initChart, authSaveImage, saveUserEcImg} from '../../common/js/canvas';
-import { showToast, getCloudData, setClipboardData } from '../../common/js/util';
-import { ADDUSERECDATA, BASICINFO, INPUTDATA, PAGEINFO, TPLDATA, USERINFO } from '../../common/js/type';
+import {
+    saveImageToPhotos, initChart,
+    authSaveImage, saveUserEcImg
+} from '../../common/js/canvas';
+import {
+    showToast, getCloudData,
+    setClipboardData, showLoading
+} from '../../common/js/util';
+import {
+    ADDUSERECDATA, BASICINFO,
+    INPUTDATA, PAGEINFO,
+    TPLDATA, USERINFO, ADDDATALIST
+} from '../../common/js/type';
 
 const App = getApp();
 
@@ -141,7 +151,6 @@ Page({
         let newData = '';
         try {
             newData = JSON.parse(e.detail.value);
-            console.log(newData);
             this.chart.setOption(newData);
             this.setData({
                 data: JSON.stringify(newData, null, 2)
@@ -166,26 +175,26 @@ Page({
                 App.globalData.isWritePhotosAlbum ? saveImageToPhotos(chartDom) : authSaveImage(chartDom);
             },
             'upCloud': async () => {
-                // 更新数据
-                // 存数据，存图片，然后把数据和图片整合在一起
-                // Promise.all([])
-
-                // 存数据，OK
-                console.log('----');
-                const upData = await getCloudData(USERINFO, {
+                showLoading('数据上传中....');
+                const upData = getCloudData(USERINFO, {
                     type: ADDUSERECDATA,
-                    tplData: this.data.data || 'ddddd'
-                }).then(res => {
-                    console.log(res);
-                }).catch(e => {
-                    console.log(e);
+                    tplData: this.data.data
                 });
-                console.log(upData);
-
-
-                // const filePath = await saveUserEcImg(this.selectComponent('#mychart-dom-bar'));
-                // console.log('====2');
-                // console.log(filePath);
+                const filePath = saveUserEcImg(this.selectComponent('#mychart-dom-bar'));
+                Promise.all([upData, filePath])
+                    .then(([dataId, imgId]) => {
+                        getCloudData(USERINFO, {
+                            type: ADDDATALIST,
+                            dataItem: {
+                                id: dataId._id,
+                                imgUrl: imgId.fileID
+                            }
+                        });
+                        wx.hideLoading();
+                        showToast('数据添加成功!', 'success');
+                    }).finally(() => {
+                        wx.hideLoading();
+                    });
             }
         }
         funcCenter[funcList[index]]();
