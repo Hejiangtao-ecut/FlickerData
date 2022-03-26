@@ -1,4 +1,21 @@
 <view class="container">
     <ec-canvas bindexposeChart="getChart" id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}" />
 </view>
-<button class="saveBtn" hover-class type="primary" bindtap="save">保存图片</button>
+<view class="inputData">
+    <textarea
+        class="textArea"
+        maxlength="-1"
+        value="{{data}}"
+        disabled
+        />
+</view>
+<view wx:if="{{imgList.length}}" class="tab" class="tabView">
+    <view
+        class="icon"
+        wx:for="{{imgList}}"
+        wx:key="index"
+        data-index="{{index}}"
+        bindtap="switchFunc">
+        <image src="{{item}}" />
+    </view>
+</view>

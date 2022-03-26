@@ -24,6 +24,20 @@
     </view>
 </view>
 
+<view class="dataCenter">
+    <view class="navName">
+        我的数据
+    </view>
+    <view class="dataList">
+        <view wx:for="{{dataList}}" wx:key="index" class="dataItem" data-index="{{index}}" bindtap="jumpPage">
+            <image src="{{item.imgUrl}}" />
+        </view>
+    </view>
+    <view class="declaration">
+        闪视数据，让数据看得见！
+    </view>
+</view>
+
 <view class="addData" bindtap="jumpIndex">
     <image src="{{addUrl}}"/>
 </view>

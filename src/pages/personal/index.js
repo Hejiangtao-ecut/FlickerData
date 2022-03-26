@@ -3,7 +3,7 @@
  * @desc 个人中心
  */
 
-import { USERINFO, USERMESSAGE, REGISTER, UPAVATAR, UPNICKNAME } from '../../common/js/type';
+import { USERINFO, USERMESSAGE, UPAVATAR, UPNICKNAME } from '../../common/js/type';
 import { getCloudData, showLoading, upLoadAvatar } from '../../common/js/util';
 
 const App = getApp();
@@ -30,17 +30,26 @@ Page({
 
     },
 
+    onShow() {
+        this.getUserInfo();
+    },
+
     getUserInfo() {
         getCloudData(USERINFO, {
             type: USERMESSAGE
         })
             .then(res => {
-                    const { dataList } = res.data[0];
-                    this.setData({
-                        dataList
-                    })
-                }
-            ).finally(() => {
+                const { dataList, nickName, avatarUrl } = res.data[0];
+                this.setData({
+                    dataList,
+                    nickName,
+                    avatarUrl
+                });
+                console.log(dataList);
+                console.log('拿到数据--');
+            }
+        ).finally(() => {
+                console.log('关闭 loading')
                 wx.hideLoading();
             });
     },
@@ -73,7 +82,7 @@ Page({
      */
     changeName() {
         this.setData({
-            isClick:true
+            isClick: true
         })
     },
 
@@ -95,7 +104,15 @@ Page({
      * 跳转首页
      */
     jumpIndex() {
-        wx.switchTab({url: "/pages/index/index"})
+        wx.switchTab({ url: "/pages/index/index" })
+    },
+
+    /**
+     * 跳转数据页面
+     */
+    jumpPage(e) {
+        console.log(e);
+        const index = e.currentTarget.dataset;
     }
 
 })

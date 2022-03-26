@@ -3,7 +3,7 @@
  * @desc 展示模块
  */
 
-import { getCloudData } from '../../common/js/util';
+import { getCloudData, jumpPage } from '../../common/js/util';
 import {PAGEINFO, TPLINFO} from '../../common/js/type';
 
 Component({
@@ -53,9 +53,7 @@ Component({
             console.log(this.data.tplList);
             const { index } = e.currentTarget.dataset;
             const { tplInfoId } = this.data.tplList[index];
-            wx.navigateTo({
-                url: `/pages/tplInfo/index?tplInfoId=${tplInfoId}`
-            });
+            jumpPage(`/pages/tplInfo/index?Id=${tplInfoId}&type=official`);
         }
     }
 })

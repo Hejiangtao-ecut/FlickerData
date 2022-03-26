@@ -1,10 +1,10 @@
 {
   "pages": [
+    "pages/classify/index",
+    "pages/personal/index",
     "pages/index/index",
     "pages/inputData/index",
-    "pages/tplInfo/index",
-    "pages/personal/index",
-    "pages/classify/index"
+    "pages/tplInfo/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
