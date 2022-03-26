@@ -95,7 +95,7 @@ export async function upLoadFile(path: string) {
  */
 export async function upLoadAvatar(path: string) {
     return await wx.cloud.uploadFile({
-        cloudPath: `${+new Date()}.png`,
+        cloudPath: `userAvatar/${+new Date()}.png`,
         filePath: path, // 文件路径
     }).then(res => {
         return res.fileID

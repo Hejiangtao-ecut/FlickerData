@@ -13,6 +13,7 @@ const openId = require('./getOpenId/index');
 const userMessage = require('./getUserMessage/index');
 const registerUser = require('./registerUser/index');
 const upAvatar = require('./upAvata/index');
+const upNickName = require('./upNickName/index');
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -25,6 +26,8 @@ exports.main = async (event, context) => {
             return registerUser.main(event, context);
         case 'upAvatar':
             return upAvatar.main(event, context);
+        case 'upNickName':
+            return upNickName.main(event, context);
     }
 
 }

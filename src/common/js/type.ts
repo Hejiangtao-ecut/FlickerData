@@ -43,6 +43,11 @@ export const REGISTER = 'register';
  */
 export const UPAVATAR = 'upAvatar';
 
+/**
+ * 更改昵称
+ */
+export const UPNICKNAME = 'upNickName';
+
 export type Icon = "error" | "success" | "loading" | "none";
 
 /**
