@@ -3,9 +3,11 @@
  * @desc 模板预览页面
  */
 
-import { saveImageToPhotos, initChart } from '../../common/js/canvas';
-import { getCloudData } from '../../common/js/util';
-import { PAGEINFO, TPLDATA, BASICINFO, INPUTDATA } from '../../common/js/type';
+import { saveImageToPhotos, initChart, authSaveImage } from '../../common/js/canvas';
+import { getCloudData, setClipboardData, showLoading, showToast } from '../../common/js/util';
+import { PAGEINFO, TPLDATA, BASICINFO, INPUTDATA, GETDATA } from '../../common/js/type';
+
+const App = getApp();
 
 Page({
     data: {
@@ -32,9 +34,12 @@ Page({
             type: BASICINFO,
             pageName: INPUTDATA
         }).then(res => {
+            let x = res.data[0].imgList.pop();
+            res.data[0].imgList.pop();
+            res.data[0].imgList.push(x);
             this.setData({
                 imgList: res.data[0].imgList || []
-            })
+            });
         })
     },
 
@@ -49,7 +54,8 @@ Page({
         if (tplData?.data?.[0]) {
             const relData = tplData.data[0].tplData;
             this.setData({
-                data: JSON.stringify(relData, null, 2)
+                data: JSON.stringify(relData, null, 2),
+                Id: tplData.data[0]._id
             })
             this.setOption(tplData.data[0].tplData);
         }
@@ -58,8 +64,18 @@ Page({
     /**
      * 用户个人数据
      */
-    personal() {
-        
+    async personal() {
+        const data = await getCloudData(PAGEINFO, {
+            type: GETDATA,
+            Id: this.data.Id
+        });
+        if (data.data) {
+            const relData = data.data.tplData;
+            this.setData({
+                data: relData
+            })
+            this.setOption(JSON.parse(relData));
+        }
     },
 
     /**
@@ -93,9 +109,32 @@ Page({
     },
 
     /**
-     * 保存图片至本地
+     * 事件中心
      */
-    save() {
-        saveImageToPhotos(this.selectComponent('#mychart-dom-bar'));
+    switchFunc(e) {
+        const { index } = e.currentTarget.dataset;
+        const funcList = ['setClip', 'saveImg', 'shareData'];
+        const funcCenter = {
+            'setClip': () => {
+                setClipboardData(this.data.data);
+            },
+            'saveImg': () => {
+                const chartDom = this.selectComponent('#mychart-dom-bar');
+                App.globalData.isWritePhotosAlbum ? saveImageToPhotos(chartDom) : authSaveImage(chartDom);
+            },
+            'shareData': () => {
+                this.onShareAppMessage();
+            }
+        }
+        funcCenter[funcList[index]]();
+    },
+
+    /**
+     * 分享事件
+     */
+    onShareAppMessage() {
+        return {
+            path: `/pages/tplInfo/index?type=personal&Id=${this.data.Id}`
+        }
     }
 });

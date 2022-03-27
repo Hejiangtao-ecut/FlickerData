@@ -88,6 +88,11 @@ export const ADDDATALIST = 'addDataList';
 export type CLOUDNAME = 'pageInfo';
 
 /**
+ * 获取数据
+ */
+export const GETDATA = 'getData';
+
+/**
  * 获取 token 地址
  */
 export const TOKEN = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=1Hxa7BUZP0EqlWDryQoKEe8i&client_secret=sPCLwXa5VPPEH0pPUNpo3Dw1XtPwtCm0&';

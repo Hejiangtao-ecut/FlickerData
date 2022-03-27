@@ -12,6 +12,7 @@ cloud.init({
 const basicInfo = require('./basicInfo/index');
 const tplInfo = require('./tplInfo/index');
 const tplData = require("./tplData/index");
+const getData = require('./getData/index');
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -22,5 +23,7 @@ exports.main = async (event, context) => {
             return tplInfo.main(event, context);
         case "tplData":
             return tplData.main(event, context);
+        case "getData":
+            return getData.main(event, context);
     }
 }

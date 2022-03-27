@@ -42,6 +42,7 @@ Page({
             type: BASICINFO,
             pageName: INPUTDATA
         }).then(res => {
+            res.data[0].imgList.pop();
             this.setData({
                 imgList: res.data[0].imgList || []
             })

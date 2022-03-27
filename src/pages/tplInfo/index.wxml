@@ -16,6 +16,10 @@
         wx:key="index"
         data-index="{{index}}"
         bindtap="switchFunc">
-        <image src="{{item}}" />
+        <image wx:if="{{index !== 2}}" src="{{item}}" />
+        <view wx:elif="{{index}}" class="shareView">
+            <image src="{{item}}" />
+            <button class="shartBtn" open-type="share" 	hover-class="none" style="width: 5vw;"/>
+        </view>
     </view>
 </view>

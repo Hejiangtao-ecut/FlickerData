@@ -46,7 +46,12 @@ export async function getCloudData(name: TYPE.CLOUDNAME, data: TYPE.DATA, retry:
     })
         .then(res => {
             return res.errMsg.includes('cloud.callFunction:ok') ? res.result : '';
-        }, rej => retry ? getCloudData(name, data) : rej)
+        }, rej => {
+            if (!retry) {
+                return rej;
+            }
+            getCloudData(name, data, false);
+        });
 }
 
 /**

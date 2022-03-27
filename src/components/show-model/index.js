@@ -48,9 +48,6 @@ Component({
     */
     methods: {
         jumpTplInfo(e) {
-            // jumpTplInfo
-            console.log(e);
-            console.log(this.data.tplList);
             const { index } = e.currentTarget.dataset;
             const { tplInfoId } = this.data.tplList[index];
             jumpPage(`/pages/tplInfo/index?Id=${tplInfoId}&type=official`);

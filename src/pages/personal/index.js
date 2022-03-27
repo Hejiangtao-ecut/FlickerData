@@ -4,9 +4,7 @@
  */
 
 import { USERINFO, USERMESSAGE, UPAVATAR, UPNICKNAME } from '../../common/js/type';
-import { getCloudData, showLoading, upLoadAvatar } from '../../common/js/util';
-
-const App = getApp();
+import { getCloudData, jumpPage, showLoading, upLoadAvatar } from '../../common/js/util';
 
 Page({
 
@@ -25,7 +23,6 @@ Page({
     */
     onLoad: function (options) {
         showLoading('数据加载中....');
-        console.log(App.globalData);
         this.getUserInfo();
 
     },
@@ -45,11 +42,8 @@ Page({
                     nickName,
                     avatarUrl
                 });
-                console.log(dataList);
-                console.log('拿到数据--');
             }
         ).finally(() => {
-                console.log('关闭 loading')
                 wx.hideLoading();
             });
     },
@@ -111,8 +105,8 @@ Page({
      * 跳转数据页面
      */
     jumpPage(e) {
-        console.log(e);
-        const index = e.currentTarget.dataset;
+        const { index } = e.currentTarget.dataset;
+        jumpPage(`/pages/tplInfo/index?type=personal&Id=${this.data.dataList[index].id}`);
     }
 
 })

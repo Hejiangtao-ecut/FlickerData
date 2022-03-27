@@ -18,7 +18,6 @@ export function authSaveImage(ecComponent) {
             saveImageToPhotos(ecComponent);
         },
         fail(e) {
-            console.log(e);
             showToast('授权失败', 'error');
         }
     })
@@ -35,14 +34,10 @@ export async function saveUserEcImg(ecComponent) {
         // 先保存图片到临时的本地文件，然后存入系统相册
         ecComponent.canvasToTempFilePath({
             success: (e) => {
-                console.log('success');
-                console.log(e);
-                // res(e);
                 wx.cloud.uploadFile({
                     cloudPath: `userEcImg/${+new Date()}.png`,
                     filePath: e.tempFilePath,
                     success: (e) => {
-                        console.log(e);
                         res(e);
                     },
                     fail: (e) => {
@@ -51,8 +46,6 @@ export async function saveUserEcImg(ecComponent) {
                 })
             },
             fail: (e) => {
-                console.log('fail');
-                console.log(e);
                 rej(e);
             }
         })

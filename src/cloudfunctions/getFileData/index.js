@@ -36,8 +36,6 @@ exports.main = async (event, context) => {
             dataTask.push(fileArray[i]);
             i++;
         }
-        console.log(title);
-        console.log(dataTask);
         title = title.trim();
         return {
             title,
