@@ -17,8 +17,6 @@ import {
     TPLDATA, USERINFO, ADDDATALIST
 } from '../../common/js/type';
 
-const App = getApp();
-
 Page({
 
     /**
@@ -167,11 +165,15 @@ Page({
     switchFunc(e) {
         const { index } = e.currentTarget.dataset;
         const funcList = ['setClip', 'saveImg', 'upCloud'];
+        wx.vibrateShort({
+            type: 'light'
+        });
         const funcCenter = {
             'setClip': () => {
                 setClipboardData(this.data.data);
             },
             'saveImg': () => {
+                const App = getApp();
                 const chartDom = this.selectComponent('#mychart-dom-bar');
                 App.globalData.isWritePhotosAlbum ? saveImageToPhotos(chartDom) : authSaveImage(chartDom);
             },

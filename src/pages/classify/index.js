@@ -47,6 +47,9 @@ Page({
      * 更改 selected 同步头部导航下面 item
      */
     changeSelect(e) {
+        wx.vibrateShort({
+            type: 'light'
+        });
         this.setData({
             selected: e.target.dataset.index
         })

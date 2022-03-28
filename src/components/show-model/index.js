@@ -50,6 +50,9 @@ Component({
         jumpTplInfo(e) {
             const { index } = e.currentTarget.dataset;
             const { tplInfoId } = this.data.tplList[index];
+            wx.vibrateShort({
+                type: 'light'
+            });
             jumpPage(`/pages/tplInfo/index?Id=${tplInfoId}&type=official`);
         }
     }

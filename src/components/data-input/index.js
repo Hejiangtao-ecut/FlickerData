@@ -33,12 +33,20 @@ Component({
         hasClick() {
             const eventList = ["jumpInput", "selectFile", "photograph"];
             const tap = eventList[this.data.serialId];
+            wx.vibrateShort({
+                type: 'light'
+            });
             const eventTap = {
                 "jumpInput": () => {
                     jumpPage(this.data.itemData.url);
                 },
                 "selectFile": async () => {
                     const filePath = await selectFile();
+                    if (!filePath) {
+                        showToast('您未选择文件', 'error');
+                        return;
+                    }
+
                     // 给个友好提示
                     showLoading('数据解析中...');
                     const fileId = await upLoadFile(filePath);
@@ -50,7 +58,7 @@ Component({
 
                     // 未获取到数据则提示失败
                     if (!fileData) {
-                        showToast('数据解析失败', ' fail');
+                        showToast('数据解析失败', 'error');
                         return;
                     }
 

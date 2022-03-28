@@ -17,8 +17,16 @@ export function authSaveImage(ecComponent) {
             App.globalData.isWritePhotosAlbum = true;
             saveImageToPhotos(ecComponent);
         },
-        fail(e) {
-            showToast('授权失败', 'error');
+        fail() {
+            wx.showModal({
+                title: '授权失败',
+                content: '请在设置里勾选保存到相册',
+                showCancel: true,
+                success(e) {
+                    e.confirm ? wx.openSetting() : '';
+                }
+
+            })
         }
     })
 }

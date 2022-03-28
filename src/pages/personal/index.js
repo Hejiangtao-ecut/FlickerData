@@ -49,6 +49,9 @@ Page({
     },
 
     changeAvarat(e) {
+        wx.vibrateShort({
+            type: 'light'
+        });
         showLoading('头像更新中...');
         const { avatarUrl } = e.detail;
         wx.saveFile({
@@ -75,6 +78,9 @@ Page({
      * 开启更改昵称
      */
     changeName() {
+        wx.vibrateShort({
+            type: 'light'
+        });
         this.setData({
             isClick: true
         })
@@ -98,6 +104,9 @@ Page({
      * 跳转首页
      */
     jumpIndex() {
+        wx.vibrateShort({
+            type: 'light'
+        });
         wx.switchTab({ url: "/pages/index/index" })
     },
 
@@ -105,6 +114,9 @@ Page({
      * 跳转数据页面
      */
     jumpPage(e) {
+        wx.vibrateShort({
+            type: 'light'
+        });
         const { index } = e.currentTarget.dataset;
         jumpPage(`/pages/tplInfo/index?type=personal&Id=${this.data.dataList[index].id}`);
     }

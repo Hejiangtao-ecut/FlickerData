@@ -114,6 +114,9 @@ Page({
     switchFunc(e) {
         const { index } = e.currentTarget.dataset;
         const funcList = ['setClip', 'saveImg', 'shareData'];
+        wx.vibrateShort({
+            type: 'light'
+        });
         const funcCenter = {
             'setClip': () => {
                 setClipboardData(this.data.data);
